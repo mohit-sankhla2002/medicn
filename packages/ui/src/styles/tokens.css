@@ -1,0 +1,11 @@
+@theme {
+  --color-status-normal: #16a34a;
+  --color-status-normal-soft: #dcfce7;
+  --color-status-watch: #ca8a04;
+  --color-status-watch-soft: #fef9c3;
+  --color-status-abnormal: #ea580c;
+  --color-status-abnormal-soft: #ffedd5;
+  --color-status-critical: #dc2626;
+  --color-status-critical-soft: #fee2e2;
+  --color-info: #2563eb;
+}

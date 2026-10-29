@@ -1,0 +1,41 @@
+import { Meta, Canvas, Controls } from "@storybook/addon-docs/blocks"
+import * as stories from "./button.stories.tsx"
+
+<Meta of={stories} />
+
+# Button
+
+Standard action trigger, tuned for medical products.
+
+<Canvas of={stories.Primary} />
+
+<Controls />
+
+## Usage in medical UIs
+
+**Do**
+
+- Use `secondary` or `ghost` for repeated clinical actions (Save, Add row) to keep
+  visual noise low on dense screens.
+- Mark irreversible or safety-critical actions clearly: `destructive` for cancel
+  order, delete record, etc. Consider a confirmation dialog before firing.
+- Use `size="sm"` inside tables and `size="lg"` on patient-facing primary flows
+  (booking confirms, consent).
+- Give icon-only buttons (`iconOnly`) an `aria-label` — always required.
+
+**Don't**
+
+- Don't show more than one `primary` button per view; it competes with
+  clinically critical information.
+- Don't use red (`destructive`) for anything that isn't an irreversible or
+  warning-level action.
+- Don't rely on color alone to communicate danger — destructive labels must read
+  as dangerous on their own ("Cancel appointment", not just "No").
+
+## Design decisions
+
+- Comfortable minimum target heights (32px+), since clinical workstations and
+  touch carts are used with gloves, in a hurry.
+- Visible `:focus-visible` ring on every variant — used in EHRs all day,
+  keyboard navigation is common and never optional.
+- `tabular-nums`-friendly sizing so rows with buttons align.

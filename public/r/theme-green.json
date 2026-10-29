@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-green",
+  "title": "Green theme",
+  "description": "Green primary, ring and chart colours.",
+  "cssVars": {
+    "light": {
+      "primary": "oklch(0.527 0.154 150.069)",
+      "primary-foreground": "oklch(0.982 0.018 155.826)",
+      "ring": "oklch(0.723 0.219 149.579)",
+      "sidebar-primary": "oklch(0.527 0.154 150.069)",
+      "sidebar-primary-foreground": "oklch(0.982 0.018 155.826)",
+      "sidebar-ring": "oklch(0.723 0.219 149.579)",
+      "chart-1": "oklch(0.871 0.15 154.449)",
+      "chart-2": "oklch(0.723 0.219 149.579)",
+      "chart-3": "oklch(0.627 0.194 149.214)",
+      "chart-4": "oklch(0.527 0.154 150.069)",
+      "chart-5": "oklch(0.448 0.119 151.328)"
+    },
+    "dark": {
+      "primary": "oklch(0.696 0.17 162.48)",
+      "primary-foreground": "oklch(0.262 0.051 172.552)",
+      "ring": "oklch(0.527 0.154 150.069)",
+      "sidebar-primary": "oklch(0.696 0.17 162.48)",
+      "sidebar-primary-foreground": "oklch(0.262 0.051 172.552)",
+      "sidebar-ring": "oklch(0.527 0.154 150.069)",
+      "chart-1": "oklch(0.871 0.15 154.449)",
+      "chart-2": "oklch(0.723 0.219 149.579)",
+      "chart-3": "oklch(0.627 0.194 149.214)",
+      "chart-4": "oklch(0.527 0.154 150.069)",
+      "chart-5": "oklch(0.448 0.119 151.328)"
+    }
+  },
+  "categories": [
+    "themes"
+  ],
+  "type": "registry:theme"
+}

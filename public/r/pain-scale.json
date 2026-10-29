@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pain-scale",
+  "title": "Pain Scale",
+  "description": "0–10 Numeric Rating Scale with color bands, face descriptors and full keyboard support.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/pain-scale.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Angry, Annoyed, Frown, Laugh, Meh, Smile } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface PainLevel {\n  min: number\n  max: number\n  label: string\n  icon: React.ComponentType<{ className?: string }>\n}\n\n/** Descriptors follow the common 0–10 Numeric Rating Scale (NRS) bands. */\nexport const PAIN_LEVELS: PainLevel[] = [\n  { min: 0, max: 0, label: \"No pain\", icon: Laugh },\n  { min: 1, max: 3, label: \"Mild\", icon: Smile },\n  { min: 4, max: 5, label: \"Moderate\", icon: Meh },\n  { min: 6, max: 7, label: \"Severe\", icon: Annoyed },\n  { min: 8, max: 9, label: \"Very severe\", icon: Frown },\n  { min: 10, max: 10, label: \"Worst possible\", icon: Angry },\n]\n\nexport function getPainLevel(value: number): PainLevel {\n  return PAIN_LEVELS.find((level) => value >= level.min && value <= level.max) ?? PAIN_LEVELS[0]\n}\n\n// One colour per score, blended across the clinical tokens:\n// normal (0) -> watch (4) -> abnormal (7) -> critical (10).\nconst PAIN_STOPS: [number, string][] = [\n  [0, \"normal\"],\n  [4, \"watch\"],\n  [7, \"abnormal\"],\n  [10, \"critical\"],\n]\n\nfunction painColor(score: number, suffix = \"\") {\n  const upper = PAIN_STOPS.findIndex(([at]) => at >= score)\n  const [toAt, to] = PAIN_STOPS[upper]\n  if (toAt === score || upper === 0) return `var(--clinical-${to}${suffix})`\n  const [fromAt, from] = PAIN_STOPS[upper - 1]\n  const amount = Math.round(((score - fromAt) / (toAt - fromAt)) * 100)\n  return `color-mix(in oklch, var(--clinical-${to}${suffix}) ${amount}%, var(--clinical-${from}${suffix}))`\n}\n\nfunction painStyle(score: number) {\n  return {\n    \"--pain\": painColor(score),\n    \"--pain-foreground\": painColor(score, \"-foreground\"),\n  } as React.CSSProperties\n}\n\nexport interface PainScaleProps extends Omit<React.ComponentProps<\"div\">, \"defaultValue\" | \"onChange\"> {\n  value?: number | null\n  defaultValue?: number | null\n  onValueChange?: (value: number) => void\n  /** Show the face icon and descriptor for the selected score. */\n  showDescriptor?: boolean\n  /** Show the anchor labels under 0, 5 and 10. */\n  showAnchors?: boolean\n  size?: \"sm\" | \"default\" | \"lg\"\n  disabled?: boolean\n  /** Accessible name for the radio group. */\n  label?: string\n}\n\nconst sizeClasses = {\n  sm: \"h-7 text-xs\",\n  default: \"h-9 text-sm\",\n  lg: \"h-11 text-base\",\n}\n\nexport function PainScale({\n  value: valueProp,\n  defaultValue = null,\n  onValueChange,\n  showDescriptor = true,\n  showAnchors = true,\n  size = \"default\",\n  disabled = false,\n  label = \"Pain intensity from 0 to 10\",\n  className,\n  ...props\n}: PainScaleProps) {\n  const [uncontrolled, setUncontrolled] = React.useState<number | null>(defaultValue)\n  const value = valueProp !== undefined ? valueProp : uncontrolled\n  const refs = React.useRef<(HTMLButtonElement | null)[]>([])\n\n  const select = (next: number) => {\n    if (disabled) return\n    if (valueProp === undefined) setUncontrolled(next)\n    onValueChange?.(next)\n  }\n\n  const onKeyDown = (event: React.KeyboardEvent, score: number) => {\n    let next: number | null = null\n    if (event.key === \"ArrowRight\" || event.key === \"ArrowUp\") next = Math.min(10, score + 1)\n    if (event.key === \"ArrowLeft\" || event.key === \"ArrowDown\") next = Math.max(0, score - 1)\n    if (event.key === \"Home\") next = 0\n    if (event.key === \"End\") next = 10\n    if (next === null) return\n    event.preventDefault()\n    select(next)\n    refs.current[next]?.focus()\n  }\n\n  const level = value != null ? getPainLevel(value) : null\n  const Icon = level?.icon\n  // Roving tabindex: the selected score (or 0) is the single tab stop.\n  const tabStop = value ?? 0\n\n  return (\n    <div data-slot=\"pain-scale\" className={cn(\"flex w-full flex-col gap-3\", className)} {...props}>\n      <div\n        role=\"radiogroup\"\n        aria-label={label}\n        aria-disabled={disabled || undefined}\n        className=\"grid grid-cols-11 gap-1\"\n      >\n        {Array.from({ length: 11 }, (_, score) => {\n          const selected = value === score\n          return (\n            <button\n              key={score}\n              ref={(node) => {\n                refs.current[score] = node\n              }}\n              type=\"button\"\n              role=\"radio\"\n              aria-checked={selected}\n              aria-label={`${score} – ${getPainLevel(score).label}`}\n              tabIndex={score === tabStop ? 0 : -1}\n              disabled={disabled}\n              onClick={() => select(score)}\n              onKeyDown={(event) => onKeyDown(event, score)}\n              style={painStyle(score)}\n              className={cn(\n                \"relative flex items-center justify-center rounded-md border font-medium tabular-nums transition-all outline-none\",\n                \"focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50\",\n                sizeClasses[size],\n                selected\n                  ? cn(\"border-(--pain) bg-(--pain)\", \"scale-105 text-white shadow-sm motion-reduce:scale-100\")\n                  : \"border-border bg-background text-foreground hover:bg-muted\"\n              )}\n            >\n              {score}\n              <span\n                aria-hidden\n                className={cn(\n                  \"absolute inset-x-1 -bottom-px h-0.5 rounded-full opacity-70\",\n                  \"bg-(--pain)\",\n                  selected && \"opacity-0\"\n                )}\n              />\n            </button>\n          )\n        })}\n      </div>\n      {showAnchors && (\n        <div className=\"grid grid-cols-3 text-xs text-muted-foreground\" aria-hidden>\n          <span>No pain</span>\n          <span className=\"text-center\">Moderate</span>\n          <span className=\"text-right\">Worst possible</span>\n        </div>\n      )}\n      {showDescriptor && (\n        <div\n          aria-live=\"polite\"\n          className=\"flex min-h-10 items-center gap-3 rounded-lg border border-dashed px-3 py-2 text-sm\"\n        >\n          {level && Icon && value != null ? (\n            <>\n              <span className=\"flex text-(--pain-foreground)\" style={painStyle(value)}>\n                <Icon className=\"size-6 shrink-0\" />\n              </span>\n              <div className=\"flex flex-col leading-tight\">\n                <span className=\"font-medium\">\n                  {value}/10 · {level.label}\n                </span>\n                <span className=\"text-xs text-muted-foreground\">Patient-reported pain intensity</span>\n              </div>\n            </>\n          ) : (\n            <span className=\"text-muted-foreground\">Select a score from 0 (no pain) to 10 (worst possible).</span>\n          )}\n        </div>\n      )}\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "forms"
+  ],
+  "type": "registry:component"
+}

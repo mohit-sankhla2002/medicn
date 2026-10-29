@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "medication-list",
+  "title": "Medication List",
+  "description": "Active medication list with dose, route, frequency, PRN and high-alert flags.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/medication-list.tsx",
+      "content": "import * as React from \"react\"\nimport { Pill } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type MedicationStatus = \"active\" | \"held\" | \"discontinued\" | \"completed\"\n\nexport interface Medication {\n  id: string\n  name: string\n  /** e.g. \"500 mg\" */\n  strength?: string\n  /** e.g. \"Oral\", \"IV\", \"Subcutaneous\" */\n  route?: string\n  /** e.g. \"Twice daily with meals\" */\n  frequency?: string\n  /** Take only as needed. */\n  prn?: boolean\n  indication?: string\n  prescriber?: string\n  /** Pre-formatted start date. */\n  startDate?: string\n  status?: MedicationStatus\n  /** Flag high-alert medications (anticoagulants, insulin, opioids…). */\n  highAlert?: boolean\n}\n\nexport const MEDICATION_STATUS_LABELS: Record<MedicationStatus, string> = {\n  active: \"Active\",\n  held: \"On hold\",\n  discontinued: \"Discontinued\",\n  completed: \"Completed\",\n}\n\nconst statusClasses: Record<MedicationStatus, string> = {\n  active: \"bg-clinical-normal/10 text-clinical-normal-foreground\",\n  held: \"bg-clinical-watch/10 text-clinical-watch-foreground\",\n  discontinued: \"bg-muted text-muted-foreground\",\n  completed: \"bg-clinical-info/10 text-clinical-info-foreground\",\n}\n\nexport interface MedicationListProps extends React.ComponentProps<\"div\"> {\n  medications: Medication[]\n  /** Render per-row actions, e.g. a dropdown menu. */\n  renderActions?: (medication: Medication) => React.ReactNode\n  emptyMessage?: React.ReactNode\n}\n\nexport function MedicationList({\n  medications,\n  renderActions,\n  emptyMessage = \"No medications recorded.\",\n  className,\n  ...props\n}: MedicationListProps) {\n  if (medications.length === 0) {\n    return (\n      <div\n        className={cn(\n          \"flex flex-col items-center gap-2 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground\",\n          className\n        )}\n        {...props}\n      >\n        <Pill className=\"size-5\" />\n        {emptyMessage}\n      </div>\n    )\n  }\n\n  return (\n    <div data-slot=\"medication-list\" className={cn(\"overflow-hidden rounded-xl border bg-card\", className)} {...props}>\n      <ul role=\"list\" className=\"divide-y\">\n        {medications.map((med) => {\n          const status = med.status ?? \"active\"\n          const inactive = status === \"discontinued\" || status === \"completed\"\n          return (\n            <li key={med.id} className=\"flex items-start gap-3 p-4\">\n              <div\n                className={cn(\n                  \"mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg\",\n                  med.highAlert ? \"bg-clinical-critical/10 text-clinical-critical-foreground\" : \"bg-primary/10 text-primary\",\n                  inactive && \"bg-muted text-muted-foreground\"\n                )}\n              >\n                <Pill className=\"size-4\" />\n              </div>\n              <div className=\"flex min-w-0 flex-1 flex-col gap-1\">\n                <div className=\"flex flex-wrap items-center gap-x-2 gap-y-1\">\n                  <span className={cn(\"font-medium\", inactive && \"text-muted-foreground line-through\")}>{med.name}</span>\n                  {med.strength && <span className=\"text-sm text-muted-foreground\">{med.strength}</span>}\n                  {med.prn && (\n                    <span className=\"rounded border px-1 text-[10px] font-semibold tracking-wide text-muted-foreground uppercase\">\n                      PRN\n                    </span>\n                  )}\n                  {med.highAlert && (\n                    <span className=\"rounded bg-clinical-critical px-1 text-[10px] font-semibold tracking-wide text-white uppercase\">\n                      High alert\n                    </span>\n                  )}\n                </div>\n                <p className=\"text-sm text-muted-foreground\">\n                  {[med.route, med.frequency].filter(Boolean).join(\" · \")}\n                  {med.indication && <span> — for {med.indication}</span>}\n                </p>\n                {(med.prescriber || med.startDate) && (\n                  <p className=\"text-xs text-muted-foreground\">\n                    {[med.prescriber, med.startDate && `since ${med.startDate}`].filter(Boolean).join(\" · \")}\n                  </p>\n                )}\n              </div>\n              <div className=\"flex shrink-0 items-center gap-1\">\n                <span className={cn(\"rounded-full px-2 py-0.5 text-xs font-medium\", statusClasses[status])}>\n                  {MEDICATION_STATUS_LABELS[status]}\n                </span>\n                {renderActions?.(med)}\n              </div>\n            </li>\n          )\n        })}\n      </ul>\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "clinical-data"
+  ],
+  "type": "registry:component"
+}
