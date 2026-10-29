@@ -13,8 +13,25 @@ import BodyMapIntensityDemo from "@/components/demos/body-map-intensity-demo"
 import ClinicalStatusBadgeDemo from "@/components/demos/clinical-status-badge-demo"
 import ClinicalTimelineCompactDemo from "@/components/demos/clinical-timeline-compact-demo"
 import ClinicalTimelineDemo from "@/components/demos/clinical-timeline-demo"
+import DentalChartDemo from "@/components/demos/dental-chart-demo"
+import DentalChartPrimaryDemo from "@/components/demos/dental-chart-primary-demo"
+import DentalChartReadonlyDemo from "@/components/demos/dental-chart-readonly-demo"
+import EarlyWarningScoreDemo from "@/components/demos/early-warning-score-demo"
+import EarlyWarningScoreRedDemo from "@/components/demos/early-warning-score-red-demo"
+import FacesPainScaleDemo from "@/components/demos/faces-pain-scale-demo"
+import FacesPainScaleReadonlyDemo from "@/components/demos/faces-pain-scale-readonly-demo"
+import FallRiskScoreDemo from "@/components/demos/fall-risk-score-demo"
+import FluidBalanceDemo from "@/components/demos/fluid-balance-demo"
+import FluidBalanceFormDemo from "@/components/demos/fluid-balance-form-demo"
+import GlasgowComaScaleDemo from "@/components/demos/glasgow-coma-scale-demo"
+import GlasgowComaScaleIntubatedDemo from "@/components/demos/glasgow-coma-scale-intubated-demo"
+import GrowthChartDemo from "@/components/demos/growth-chart-demo"
+import GrowthChartLengthDemo from "@/components/demos/growth-chart-length-demo"
 import LabResultsAbnormalDemo from "@/components/demos/lab-results-abnormal-demo"
 import LabResultsDemo from "@/components/demos/lab-results-demo"
+import LesionMapDemo from "@/components/demos/lesion-map-demo"
+import LesionMapReadonlyDemo from "@/components/demos/lesion-map-readonly-demo"
+import MedicationAdministrationRecordDemo from "@/components/demos/medication-administration-record-demo"
 import MedicationFormDemo from "@/components/demos/medication-form-demo"
 import MedicationFormPrnDemo from "@/components/demos/medication-form-prn-demo"
 import MedicationListDemo from "@/components/demos/medication-list-demo"
@@ -24,6 +41,9 @@ import PatientHeaderCompactDemo from "@/components/demos/patient-header-compact-
 import PatientHeaderDemo from "@/components/demos/patient-header-demo"
 import ProblemListDemo from "@/components/demos/problem-list-demo"
 import ProblemListReadonlyDemo from "@/components/demos/problem-list-readonly-demo"
+import QuestionnaireDemo from "@/components/demos/questionnaire-demo"
+import QuestionnaireGad7Demo from "@/components/demos/questionnaire-gad7-demo"
+import QuestionnaireScoreDemo from "@/components/demos/questionnaire-score-demo"
 import VitalSignCardDemo from "@/components/demos/vital-sign-card-demo"
 import VitalSignsDemo from "@/components/demos/vital-signs-demo"
 import VitalsChartDemo from "@/components/demos/vitals-chart-demo"
@@ -43,8 +63,25 @@ export const demos: Record<string, React.ComponentType> = {
   "clinical-status-badge-demo": ClinicalStatusBadgeDemo,
   "clinical-timeline-compact-demo": ClinicalTimelineCompactDemo,
   "clinical-timeline-demo": ClinicalTimelineDemo,
+  "dental-chart-demo": DentalChartDemo,
+  "dental-chart-primary-demo": DentalChartPrimaryDemo,
+  "dental-chart-readonly-demo": DentalChartReadonlyDemo,
+  "early-warning-score-demo": EarlyWarningScoreDemo,
+  "early-warning-score-red-demo": EarlyWarningScoreRedDemo,
+  "faces-pain-scale-demo": FacesPainScaleDemo,
+  "faces-pain-scale-readonly-demo": FacesPainScaleReadonlyDemo,
+  "fall-risk-score-demo": FallRiskScoreDemo,
+  "fluid-balance-demo": FluidBalanceDemo,
+  "fluid-balance-form-demo": FluidBalanceFormDemo,
+  "glasgow-coma-scale-demo": GlasgowComaScaleDemo,
+  "glasgow-coma-scale-intubated-demo": GlasgowComaScaleIntubatedDemo,
+  "growth-chart-demo": GrowthChartDemo,
+  "growth-chart-length-demo": GrowthChartLengthDemo,
   "lab-results-abnormal-demo": LabResultsAbnormalDemo,
   "lab-results-demo": LabResultsDemo,
+  "lesion-map-demo": LesionMapDemo,
+  "lesion-map-readonly-demo": LesionMapReadonlyDemo,
+  "medication-administration-record-demo": MedicationAdministrationRecordDemo,
   "medication-form-demo": MedicationFormDemo,
   "medication-form-prn-demo": MedicationFormPrnDemo,
   "medication-list-demo": MedicationListDemo,
@@ -54,6 +91,9 @@ export const demos: Record<string, React.ComponentType> = {
   "patient-header-demo": PatientHeaderDemo,
   "problem-list-demo": ProblemListDemo,
   "problem-list-readonly-demo": ProblemListReadonlyDemo,
+  "questionnaire-demo": QuestionnaireDemo,
+  "questionnaire-gad7-demo": QuestionnaireGad7Demo,
+  "questionnaire-score-demo": QuestionnaireScoreDemo,
   "vital-sign-card-demo": VitalSignCardDemo,
   "vital-signs-demo": VitalSignsDemo,
   "vitals-chart-demo": VitalsChartDemo,

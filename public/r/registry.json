@@ -711,6 +711,454 @@
       }
     },
     {
+      "name": "dental-chart",
+      "type": "registry:component",
+      "title": "Dental Chart",
+      "description": "Odontogram for dental charting: permanent, primary or mixed dentition, FDI / Universal / Palmer numbering, 5-surface diagrams, existing vs planned treatment and an ADA-style findings summary.",
+      "categories": [
+        "anatomy"
+      ],
+      "registryDependencies": [
+        "badge",
+        "toggle-group"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/dental-chart.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "lesion-map",
+      "type": "registry:component",
+      "title": "Lesion Map",
+      "description": "Skin lesion and wound documentation map: numbered pins at exact positions on the front/back body, auto-detected region, status-coloured tracking and an editor.",
+      "categories": [
+        "anatomy"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "field",
+        "input",
+        "select",
+        "textarea",
+        "toggle-group",
+        "https://medicn.vercel.app/r/body-map.json",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/lesion-map.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "early-warning-score",
+      "type": "registry:component",
+      "title": "Early Warning Score",
+      "description": "NEWS2 calculator with per-parameter sub-scores, red-score detection, clinical risk band and RCP monitoring/response guidance.",
+      "categories": [
+        "assessments"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "card",
+        "field",
+        "select",
+        "switch",
+        "table",
+        "toggle-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json",
+        "https://medicn.vercel.app/r/vitals-form.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/early-warning-score.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "questionnaire",
+      "type": "registry:component",
+      "title": "Questionnaire",
+      "description": "Scored patient questionnaire with PHQ-9 and GAD-7 built in: radio-group items, live progress, severity bands, and item-level safety flags.",
+      "categories": [
+        "assessments"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "radio-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/questionnaire.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "glasgow-coma-scale",
+      "type": "registry:component",
+      "title": "Glasgow Coma Scale",
+      "description": "Structured GCS assessment with eye, verbal and motor radiogroups, not-testable handling, severity band and optional GCS-P.",
+      "categories": [
+        "assessments"
+      ],
+      "registryDependencies": [
+        "field",
+        "radio-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/glasgow-coma-scale.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "fall-risk-score",
+      "type": "registry:component",
+      "title": "Fall Risk Score",
+      "description": "Morse Fall Scale form with live total, configurable risk thresholds and an intervention checklist per risk level.",
+      "categories": [
+        "assessments"
+      ],
+      "registryDependencies": [
+        "checkbox",
+        "field",
+        "radio-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/fall-risk-score.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "faces-pain-scale",
+      "type": "registry:component",
+      "title": "Faces Pain Scale",
+      "description": "Paediatric self-report pain scale: six original faces scored 0–10 in steps of 2, with child-friendly labels, colour ramp and radio-group keyboard support.",
+      "categories": [
+        "assessments"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/faces-pain-scale.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "growth-chart",
+      "type": "registry:component",
+      "title": "Growth Chart",
+      "description": "Paediatric weight- and length-for-age chart with WHO percentile curves (0–24 months), plotted measurements, percentile and z-score tooltips, and flags outside the 3rd–97th percentiles.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "chart",
+        "table",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/growth-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/medicn/growth-chart-data.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "fluid-balance",
+      "type": "registry:component",
+      "title": "Fluid Balance",
+      "description": "Hourly intake and output (I&O) flowsheet with shift subtotals, 24 h totals, running balance and a weight-based urine output check.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "dialog",
+        "field",
+        "input",
+        "select",
+        "table",
+        "tooltip",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/fluid-balance.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "medication-administration-record",
+      "type": "registry:component",
+      "title": "Medication Administration Record",
+      "description": "eMAR grid of medication orders by day and scheduled time, with given, held, refused, missed, due and overdue status, PRN doses, high-alert flags and a documentation dialog.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "dialog",
+        "field",
+        "input",
+        "select",
+        "table",
+        "tooltip",
+        "https://medicn.vercel.app/r/clinical-status-badge.json",
+        "https://medicn.vercel.app/r/medication-list.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/medication-administration-record.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
       "name": "clinic-dashboard",
       "type": "registry:block",
       "title": "Clinic Dashboard",
@@ -761,6 +1209,7 @@
         "textarea",
         "https://medicn.vercel.app/r/allergy-list.json",
         "https://medicn.vercel.app/r/clinical-timeline.json",
+        "https://medicn.vercel.app/r/early-warning-score.json",
         "https://medicn.vercel.app/r/lab-results.json",
         "https://medicn.vercel.app/r/medication-form.json",
         "https://medicn.vercel.app/r/medication-list.json",
