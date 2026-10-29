@@ -9,10 +9,13 @@ import AppointmentCalendarMonthDemo from "@/components/demos/appointment-calenda
 import AppointmentSlotPickerDemo from "@/components/demos/appointment-slot-picker-demo"
 import BodyMapControlledDemo from "@/components/demos/body-map-controlled-demo"
 import BodyMapDemo from "@/components/demos/body-map-demo"
+import BodyMapHeadDemo from "@/components/demos/body-map-head-demo"
 import BodyMapIntensityDemo from "@/components/demos/body-map-intensity-demo"
+import BodyMapSimpleDemo from "@/components/demos/body-map-simple-demo"
 import ClinicalStatusBadgeDemo from "@/components/demos/clinical-status-badge-demo"
 import ClinicalTimelineCompactDemo from "@/components/demos/clinical-timeline-compact-demo"
 import ClinicalTimelineDemo from "@/components/demos/clinical-timeline-demo"
+import DentalChartArchDemo from "@/components/demos/dental-chart-arch-demo"
 import DentalChartDemo from "@/components/demos/dental-chart-demo"
 import DentalChartPrimaryDemo from "@/components/demos/dental-chart-primary-demo"
 import DentalChartReadonlyDemo from "@/components/demos/dental-chart-readonly-demo"
@@ -59,10 +62,13 @@ export const demos: Record<string, React.ComponentType> = {
   "appointment-slot-picker-demo": AppointmentSlotPickerDemo,
   "body-map-controlled-demo": BodyMapControlledDemo,
   "body-map-demo": BodyMapDemo,
+  "body-map-head-demo": BodyMapHeadDemo,
   "body-map-intensity-demo": BodyMapIntensityDemo,
+  "body-map-simple-demo": BodyMapSimpleDemo,
   "clinical-status-badge-demo": ClinicalStatusBadgeDemo,
   "clinical-timeline-compact-demo": ClinicalTimelineCompactDemo,
   "clinical-timeline-demo": ClinicalTimelineDemo,
+  "dental-chart-arch-demo": DentalChartArchDemo,
   "dental-chart-demo": DentalChartDemo,
   "dental-chart-primary-demo": DentalChartPrimaryDemo,
   "dental-chart-readonly-demo": DentalChartReadonlyDemo,

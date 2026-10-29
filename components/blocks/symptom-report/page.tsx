@@ -10,7 +10,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { BodyMap, BodyMapSelectionList, getBodyRegionLabel } from "@/components/medicn/body-map"
+import { BodyMap, BodyMapSelectionList, getBodyRegionLabel, type BodySex } from "@/components/medicn/body-map"
 import { getPainLevel, PainScale } from "@/components/medicn/pain-scale"
 
 const SYMPTOMS = ["Pain", "Aching", "Burning", "Numbness", "Tingling", "Swelling", "Stiffness", "Rash", "Weakness"]
@@ -24,6 +24,7 @@ const ONSET = [
 ]
 
 export interface SymptomReport {
+  sex: BodySex
   regions: string[]
   intensity: Record<string, number>
   symptoms: string[]
@@ -33,6 +34,7 @@ export interface SymptomReport {
 }
 
 export default function SymptomReportPage() {
+  const [sex, setSex] = React.useState<BodySex>("female")
   const [regions, setRegions] = React.useState<string[]>([])
   const [intensity, setIntensity] = React.useState<Record<string, number>>({})
   const [active, setActive] = React.useState<string | null>(null)
@@ -61,24 +63,30 @@ export default function SymptomReportPage() {
         className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[minmax(0,420px)_1fr]"
         onSubmit={(e) => {
           e.preventDefault()
-          setSubmitted({ regions, intensity, symptoms, onset, pattern, notes })
+          setSubmitted({ sex, regions, intensity, symptoms, onset, pattern, notes })
         }}
       >
         <Card>
           <CardHeader>
             <CardTitle>Where does it hurt?</CardTitle>
-            <CardDescription>Tap every area that&apos;s affected. Switch to the back view for your back.</CardDescription>
+            <CardDescription>
+              Tap every area that&apos;s affected. Tap your face, a hand or a foot to zoom in for more detail.
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
             <BodyMap
               value={regions}
               onValueChange={onRegionsChange}
               intensity={intensity}
+              sex={sex}
+              onSexChange={setSex}
+              showSexToggle
               className="max-w-[300px]"
             />
             <BodyMapSelectionList
               value={regions}
               intensity={intensity}
+              sex={sex}
               onRemove={removeRegion}
               emptyText={
                 <span className="inline-flex items-center gap-1.5">
@@ -116,7 +124,7 @@ export default function SymptomReportPage() {
                           active === id ? "border-primary bg-primary text-primary-foreground" : "hover:bg-muted"
                         )}
                       >
-                        {getBodyRegionLabel(id)}
+                        {getBodyRegionLabel(id, { sex })}
                         {intensity[id] != null && <span className="ml-1.5 tabular-nums opacity-80">{intensity[id]}</span>}
                       </button>
                     ))}
@@ -124,7 +132,7 @@ export default function SymptomReportPage() {
                   {active && (
                     <PainScale
                       key={active}
-                      label={`Pain intensity for ${getBodyRegionLabel(active)}`}
+                      label={`Pain intensity for ${getBodyRegionLabel(active, { sex })}`}
                       value={intensity[active] ?? null}
                       onValueChange={(value) => setIntensity((prev) => ({ ...prev, [active]: value }))}
                     />

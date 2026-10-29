@@ -11,8 +11,8 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — medical components for shadcn/ui`,
-    template: `%s · ${siteConfig.name}`,
+    default: `Medicn — medical components for shadcn/ui`,
+    template: "%s · Medicn",
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),

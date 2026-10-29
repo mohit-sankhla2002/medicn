@@ -549,7 +549,7 @@
       "name": "body-map",
       "type": "registry:component",
       "title": "Body Map",
-      "description": "Interactive front/back human anatomy map for marking where the problem is, with heat-map intensity and selection chips.",
+      "description": "Interactive human anatomy map for pinpointing where the problem is: ~100 fine regions (eyes, ears, nose, fingers, abdominal regions…), male and female figures, zoomable close-ups of the face, hands and feet, heat-map intensity and selection chips.",
       "categories": [
         "anatomy"
       ],
@@ -565,6 +565,10 @@
         {
           "path": "components/medicn/body-map.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "components/medicn/body-map-data.ts",
+          "type": "registry:lib"
         }
       ],
       "cssVars": {

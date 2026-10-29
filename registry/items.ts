@@ -897,14 +897,31 @@ const problems: Problem[] = [
     name: "body-map",
     title: "Body Map",
     description:
-      "Interactive front/back human anatomy map for marking where the problem is, with heat-map intensity and selection chips.",
+      "Interactive human anatomy map for pinpointing where the problem is: ~100 fine regions (eyes, ears, nose, fingers, abdominal regions…), male and female figures, zoomable close-ups of the face, hands and feet, heat-map intensity and selection chips.",
     type: "registry:component",
     category: "Anatomy",
-    files: [component("body-map")],
+    files: [component("body-map"), { path: "components/medicn/body-map-data.ts", type: "registry:lib" }],
     dependencies: ["lucide-react"],
     registryDependencies: ["badge", "button", "toggle-group"],
+    references: [
+      {
+        label: "Abdominal regions (nine-region scheme)",
+        href: "https://en.wikipedia.org/wiki/Abdomen#Regions",
+        description: "Detailed abdomen uses the nine regions bounded by the midclavicular lines and the subcostal and intertubercular planes.",
+      },
+    ],
     demos: [
-      { name: "body-map-demo" },
+      {
+        name: "body-map-demo",
+        title: "Detailed, with sex toggle",
+        description: "Click the head, a hand or a foot to zoom into a close-up.",
+      },
+      {
+        name: "body-map-head-demo",
+        title: "Face close-up",
+        description:
+          "`defaultView=\"head\"` opens straight into the face: eyelids, nostrils, lips, earlobes, chin. Parts roll up with `getParentRegion`.",
+      },
       {
         name: "body-map-intensity-demo",
         title: "Pain intensity heat map",
@@ -913,47 +930,67 @@ const problems: Problem[] = [
       {
         name: "body-map-controlled-demo",
         title: "Controlled, single select",
-        description: "Controlled `view` and `value`, `multiple={false}`, with the face disabled.",
+        description: "Controlled `view`, `focusPart` and `value`, `multiple={false}`, with one region disabled.",
+      },
+      {
+        name: "body-map-simple-demo",
+        title: "Simple regions",
+        description: "`detail=\"simple\"` keeps the original 54 regions (and their ids), without close-ups.",
       },
     ],
     usage: `"use client"
 
 import * as React from "react"
-import { BodyMap, BodyMapSelectionList } from "@/components/medicn/body-map"
+import { BodyMap, BodyMapSelectionList, type BodySex } from "@/components/medicn/body-map"
 
 export function PainLocation() {
   const [areas, setAreas] = React.useState<string[]>([])
+  const [sex, setSex] = React.useState<BodySex>("female")
   return (
     <div className="flex flex-col items-center gap-4">
-      <BodyMap value={areas} onValueChange={setAreas} />
-      <BodyMapSelectionList value={areas} onRemove={(id) => setAreas((a) => a.filter((x) => x !== id))} />
+      <BodyMap value={areas} onValueChange={setAreas} sex={sex} onSexChange={setSex} showSexToggle />
+      <BodyMapSelectionList sex={sex} value={areas} onRemove={(id) => setAreas((a) => a.filter((x) => x !== id))} />
     </div>
   )
 }`,
     notes: [
-      "54 regions (28 front, 26 back). Region ids use anatomical sides from the patient's perspective, e.g. `front-knee-left`, `back-lower-back-right`. In the front view the patient's right is on the viewer's left.",
-      "`BODY_REGIONS`, `getBodyRegionLabel(id)` and `getBodyMapHeatColor(intensity)` are exported for summaries and legends.",
-      "Selection keeps ids from both views, so switching front/back never loses data.",
-      "Each region is a `role=\"checkbox\"` with its anatomical label; Enter or Space toggles it.",
-      "Paths are computed at module load without browser APIs, so the map renders on the server.",
+      "Two region sets. `detail=\"detailed\"` (default) has ~100 body regions plus close-up parts; `detail=\"simple\"` keeps the original 54 regions with their exact ids (`front-knee-left`, `back-lower-back-right`…) and look, so stored selections keep working.",
+      "Detailed ids are kebab-case with the patient's side as a suffix: `eye-left`, `ear-right`, `nose`, `palm-left`, `back-of-knee-right`, `lower-back-left`. Posterior surfaces use `back-of-…` where the front has the same name. `scalp`, `ear-*` and `fingers-*` appear in more than one view and share their selection.",
+      "Head & neck: scalp, forehead, temples, eyes, ears, nose, cheeks, mouth, jaw, throat, back of head, nape. Front torso: chest (labelled breast when `sex=\"female\"`), sternum, the nine abdominal regions (epigastric, umbilical, suprapubic, hypochondriac, flank/lumbar and iliac on each side), groin and genital/pelvic area. Back: upper back, mid back, lower back, buttocks. Each limb: shoulder, upper arm, elbow, forearm, wrist, palm / back of hand, fingers; hip, thigh, knee / back of knee, shin / calf, ankle / back of ankle, top of foot, toes, heel and sole.",
+      "Close-ups (detailed mode): clicking or pressing Enter on a face, hand or foot region turns and zooms the figure into a close-up with finer parts: eyebrows, upper eyelids, nostrils, upper / lower lip, chin, earlobes; thumb and each finger; and a side view of the foot (top, toes, sole, heel, ankle, Achilles). Space selects the region instead. \"Back to body\" or Escape zooms back out. Set `zoomable={false}` to turn this off.",
+      "`getParentRegion(id)` rolls a region up one level (`eyelid-left` → `eye-left` → `front-face`); `getSimpleRegions(id)` returns every simple region it belongs to (midline regions like the sternum straddle two). Selecting a finer part replaces its parent in the selection and vice versa; related regions are shown half-filled with `aria-checked=\"mixed\"`, and simple ids passed to a detailed map highlight their detailed children.",
+      "Male and female silhouettes share every region id; `sex` only changes the outline, anatomical hints and the chest label. Use `showSexToggle` for a built-in Male / Female toggle, or control `sex` yourself.",
+      "`BODY_REGIONS`, `DETAILED_BODY_REGIONS`, `getBodyRegionLabel(id, { sex })` and `getBodyMapHeatColor(intensity)` are exported for summaries and legends. Geometry lives in `body-map-data.ts` (`getBodyMapScene`, `getBodyRegions`, `hitTestBodyMapScene`) and is shared with Lesion Map.",
+      "Animations use the Web Animations API (no extra dependency) and are skipped when the user prefers reduced motion. View changes are announced in a polite live region.",
+      "Each region is a `role=\"checkbox\"` with its anatomical label (\"Left ear\", \"Right lower back\"); Enter or Space toggles it. Sides are the patient's: in front-facing views the patient's right is on the viewer's left.",
+      "Regions are convex cells clipped to the silhouette at module load, without browser APIs, so the map renders on the server and the regions tile the outline with no gaps.",
     ],
     api: [
       {
         component: "BodyMap",
         description: "Other div props are passed to the root.",
         props: [
-          { name: "view", type: '"front" | "back"', description: "Controlled view." },
+          { name: "detail", type: '"detailed" | "simple"', default: '"detailed"', description: "Fine regions with close-ups, or the original 54 regions." },
+          { name: "sex", type: '"male" | "female"', description: "Controlled silhouette. Region ids are identical for both." },
+          { name: "defaultSex", type: "BodySex", default: '"male"', description: "Initial silhouette when uncontrolled." },
+          { name: "onSexChange", type: "(sex: BodySex) => void", description: "Called from the sex toggle." },
+          { name: "showSexToggle", type: "boolean", default: "false", description: "Show a Male / Female toggle next to the view toggle." },
+          { name: "view", type: '"front" | "back" | "head"', description: "Controlled view. `\"head\"` is the face close-up (detailed mode)." },
           { name: "defaultView", type: "BodyView", default: '"front"', description: "Initial view when uncontrolled." },
-          { name: "onViewChange", type: "(view: BodyView) => void", description: "Called when the view changes." },
+          { name: "onViewChange", type: "(view: BodyView) => void", description: "Called when the view changes (including `\"head\"`)." },
+          { name: "zoomable", type: "boolean", default: "true", description: "Face, hand and foot regions zoom into close-ups (detailed mode only)." },
+          { name: "focusPart", type: '"head" | "hand-left" | "hand-right" | "foot-left" | "foot-right" | null', description: "Controlled close-up; `null` shows the whole body. Hands show the palm from the front view and the back of the hand from the back view." },
+          { name: "defaultFocusPart", type: "BodyFocusPart | null", default: "null", description: "Initial close-up when uncontrolled." },
+          { name: "onFocusPartChange", type: "(part: BodyFocusPart | null) => void", description: "Called when zooming in or out." },
           { name: "value", type: "string[]", description: "Controlled selected region ids." },
           { name: "defaultValue", type: "string[]", default: "[]", description: "Initial selection when uncontrolled." },
           { name: "onValueChange", type: "(ids: string[]) => void", description: "Called when the selection changes." },
           { name: "multiple", type: "boolean", default: "true", description: "When `false`, a click replaces the selection." },
-          { name: "intensity", type: "Record<string, number>", description: "Region id → 0–10. Heat-map coloring; added to labels and aria-labels." },
-          { name: "showViewToggle", type: "boolean", default: "true", description: "Show the Front/Back toggle." },
+          { name: "intensity", type: "Record<string, number>", description: "Region id → 0–10. Heat-map coloring; added to labels and aria-labels. Parents show their worst child; close-ups inherit from parents." },
+          { name: "showViewToggle", type: "boolean", default: "true", description: "Show the Front / Back (/ Face) toggle." },
           { name: "showLabels", type: "boolean", default: "true", description: "Floating region label on hover and focus." },
-          { name: "readOnly", type: "boolean", default: "false", description: "Regions are focusable but cannot be toggled." },
-          { name: "disabledRegions", type: "string[]", default: "[]", description: "Regions that cannot be selected." },
+          { name: "readOnly", type: "boolean", default: "false", description: "Regions are focusable (and close-ups still open) but cannot be toggled." },
+          { name: "disabledRegions", type: "string[]", default: "[]", description: "Regions that cannot be selected; also disables their sub-regions." },
           { name: "className", type: "string", description: "Root defaults to `w-full max-w-[280px]`." },
         ],
       },
@@ -963,7 +1000,20 @@ export function PainLocation() {
           { name: "value", type: "string[]", description: "Region ids to show as chips." },
           { name: "onRemove", type: "(id: string) => void", description: "Shows a remove button on each chip." },
           { name: "intensity", type: "Record<string, number>", description: "Adds “n/10” to each chip." },
+          { name: "sex", type: "BodySex", description: "Sex-specific labels (\"Left breast\")." },
           { name: "emptyText", type: "ReactNode", default: '"No areas selected"', description: "Shown when empty." },
+        ],
+      },
+      {
+        component: "getParentRegion",
+        description: "Exported helpers from `body-map` (geometry lives in `body-map-data.ts`).",
+        props: [
+          { name: "getParentRegion(id)", type: "string | undefined", description: "One level up: close-up part → detailed region → simple region. `undefined` for simple ids." },
+          { name: "getSimpleRegions(id)", type: "string[]", description: "All simple regions a region rolls up to." },
+          { name: "getBodyRegionLabel(id, { sex })", type: "string", description: "Label for any region id." },
+          { name: "getBodyRegions(view, { sex, detail })", type: "{ id, label }[]", description: "Regions in a view or close-up scene." },
+          { name: "getBodyMapScene(id, { sex, detail })", type: "BodyMapScene", description: "Outline path, region paths/polygons and hints for a scene." },
+          { name: "hitTestBodyMapScene(scene, [x, y])", type: "string", description: "Region at a viewBox point (finest first, else nearest)." },
         ],
       },
     ],
@@ -1104,6 +1154,12 @@ const [pain, setPain] = React.useState<number | null>(null)
           "FDI numbering with existing findings. Pick a tool, choose Existing or Planned, then click a tooth or one of its five surfaces. Clicking the same finding again removes it.",
       },
       {
+        name: "dental-chart-arch-demo",
+        title: "Arch layout (occlusal view of both jaws)",
+        description:
+          "`defaultLayout=\"arch\"` with `showLayoutToggle`: teeth sit along the upper and lower jaw arches, each with its occlusal 5-surface diagram (buccal outward, mesial toward the midline). Painting, findings and summary work exactly as in the rows layout.",
+      },
+      {
         name: "dental-chart-primary-demo",
         title: "Primary dentition, Universal letters",
         description: "`dentition=\"primary\"` with `numbering=\"universal\"` (A–T) and a reduced tool set for a paediatric chart.",
@@ -1133,7 +1189,13 @@ export function Odontogram() {
 
   return (
     <div className="flex flex-col gap-4">
-      <DentalChart value={chart} onValueChange={setChart} numbering="fdi" />
+      <DentalChart
+        value={chart}
+        onValueChange={setChart}
+        numbering="fdi"
+        defaultLayout="arch"
+        showLayoutToggle
+      />
       <DentalChartLegend />
       <DentalChartSummary value={chart} />
     </div>
@@ -1149,7 +1211,10 @@ export function Odontogram() {
       "Keyboard: the chart is one tab stop. Arrow keys move between teeth (Up/Down switch arches), Home/End jump to the ends of a row, Enter/Space activates a tooth, and M, O/I, D, B/F, L/P apply the active tool to that surface. Each tooth is a button whose label reads e.g. “Tooth 36, lower left first molar, caries on occlusal surface”.",
       "`onToothClick(tooth, surface)` fires on every activation before the built-in handling. Use `tool=\"select\"` with `selected`/`onSelectedChange` (keys `\"36\"` and `\"36:O\"`) to drive your own procedure dialog, or `applyDentalTool()` to reuse the paint logic.",
       "`getDentalFindings(value, system)` flattens a chart into ADA-style findings for notes, claims or export; `describeTooth()` returns the accessible description.",
-      "On narrow screens the chart scrolls horizontally; teeth stay 36–40px wide.",
+      "Layouts: `\"rows\"` (default) draws straight rows with side-view teeth; `\"arch\"` is an occlusal odontogram, with the upper jaw on top as a U opening downward and the lower jaw beneath opening upward. Teeth follow a catenary arch form, rotated to the curve and sized by type (molars largest, incisors narrow). Gums, palate and tongue are shown as faint shapes behind them. Both layouts share the same state, tools, keyboard model and accessible labels.",
+      "Arch layout surfaces: buccal/facial faces out of the arch, lingual/palatal faces the palate or tongue, mesial faces the midline and distal faces away from it. Click a tooth number to activate the whole tooth (e.g. to select it). Crowns are a ring around the crown, implants a fixture circle, root canals the canal orifices, pontics a bar along the arch.",
+      "Mixed dentition in the arch layout: the primary teeth form an inner arch inside the permanent one, with their numbers on the lingual side. Arrow keys follow the same row order: Left/Right move along an arch, Up/Down move outer upper → inner upper → inner lower → outer lower.",
+      "Rows layout scrolls horizontally on narrow screens (teeth stay 36–40px wide). The arch layout is a single SVG that scales to its container (up to 30rem wide), so it needs no scrolling down to 320px.",
       "This is a charting UI, not a coding service: map findings to CDT / SNOMED CT codes in your own backend.",
     ],
     api: [
@@ -1176,6 +1241,10 @@ export function Odontogram() {
           { name: "tools", type: "DentalChartTool[]", description: "Restrict the toolbar to these tools." },
           { name: "readOnly", type: "boolean", default: "false", description: "Teeth stay focusable and announce findings but cannot be changed." },
           { name: "caption", type: "ReactNode | null", description: "Replaces the numbering/orientation caption; `null` hides it." },
+          { name: "layout", type: '"rows" | "arch"', description: "Controlled layout: straight rows, or teeth arranged along the upper and lower jaw arches (occlusal view)." },
+          { name: "defaultLayout", type: '"rows" | "arch"', default: '"rows"', description: "Initial layout when uncontrolled." },
+          { name: "onLayoutChange", type: '(layout: "rows" | "arch") => void', description: "Called when the layout toggle changes." },
+          { name: "showLayoutToggle", type: "boolean", default: "false", description: "Show a Rows / Arch toggle in the toolbar (also shown when `readOnly`)." },
         ],
       },
       {
@@ -1283,14 +1352,15 @@ export function SkinCheck() {
     notes: [
       "Pins are placed only on the silhouette: the filled body outline is the click target, and drags or arrow-key nudges that would leave it are ignored (SVG `isPointInFill`).",
       "`x` / `y` are normalised 0–1 coordinates relative to the illustration, not anatomically precise positions. Use them to redraw the pin, not for measurement or registration between visits.",
-      "`region` is a body-map region id (e.g. `back-forearm-left`), detected by point-in-region against the same region cells as `BodyMap`, falling back to the nearest region. It is re-detected when a pin moves and can be overridden in the editor. Export `detectBodyRegion(view, x, y)` for server-side use.",
+      "`region` is a body-map region id (e.g. `back-of-forearm-left`, `nose`, `knee-right`), detected by point-in-region against the same geometry as `BodyMap` (finest layer first, falling back to the nearest region). It is re-detected when a pin moves and can be overridden in the editor. Export `detectBodyRegion(view, x, y, { sex, detail })` for server-side use.",
+      "`detail` picks the region set used for detection: `\"detailed\"` (default, e.g. \"Left knee\", \"Nose\") or `\"simple\"` (the original 54 ids). Lesions keep whatever region they were saved with; labels resolve for both sets.",
+      "`sex` switches between the male and female silhouettes (same region ids; the chest is labelled breast for female).",
       "Status drives the pin ring: changed = clinical-critical, new = clinical-watch, stable = clinical-normal, resolved = muted and dashed. The status is always written out too (legend, list badge, editor, pin `aria-label`).",
       "Pins are numbered by their position in `value`, so keep the array in a stable order (e.g. creation order) to keep numbers consistent between visits.",
       "Keyboard: Tab to a pin, Enter/Space selects, arrow keys nudge (Shift for larger steps), Delete or Backspace removes, Escape deselects.",
       "Store photos and dermoscopy images separately (e.g. FHIR `Media` / `DocumentReference`) and link them by lesion `id`; the component holds no images.",
       "For FHIR, map each lesion to a `BodyStructure` (location + morphology) and record findings over time as `Observation`s whose `focus`/`bodySite` reference it.",
       "Dermatome mode is out of scope: dermatome boundaries vary between individuals and references, and drawing them on this simplified silhouette would be inaccurate.",
-      "The silhouette and region cells are copied from `body-map.tsx` (which does not export its geometry) and must be kept in sync; region ids and labels are imported.",
     ],
     api: [
       {
@@ -1313,6 +1383,8 @@ export function SkinCheck() {
           { name: "showLegend", type: "boolean", default: "true", description: "Status legend under the map." },
           { name: "newLesionDefaults", type: 'Partial<Pick<Lesion, "type" | "status" | "date">>', description: 'Values for new pins (default type "other", status "new").' },
           { name: "renderPin", type: "(props: LesionPinRenderProps) => ReactNode", description: "Custom SVG pin content centred on (0, 0), ~6.5 viewBox units radius. Receives `lesion`, `number`, `selected`, `title`." },
+          { name: "sex", type: '"male" | "female"', default: '"male"', description: "Silhouette; region ids are the same for both." },
+          { name: "detail", type: '"detailed" | "simple"', default: '"detailed"', description: "Region set used to detect `region` for new or moved pins." },
         ],
       },
       {
@@ -1324,6 +1396,7 @@ export function SkinCheck() {
           { name: "onChange", type: "(lesion: Lesion) => void", description: "Called with the updated lesion on every edit." },
           { name: "onRemove", type: "() => void", description: "Shows a Remove button." },
           { name: "onClose", type: "() => void", description: "Shows a close button." },
+          { name: "sex / detail", type: "BodySex / BodyMapDetail", description: "Region labels and the region list offered in the Region select." },
         ],
       },
       {

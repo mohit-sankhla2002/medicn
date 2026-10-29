@@ -12,11 +12,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { ClinicalStatusBadge, type ClinicalStatus } from "@/components/medicn/clinical-status-badge"
 import {
-  BODY_REGIONS,
+  BODY_VIEWBOX,
+  getBodyMapScene,
   getBodyRegionLabel,
-  type BodyRegionId,
-  type BodyView,
-} from "@/components/medicn/body-map"
+  getBodyRegions,
+  hitTestBodyMapScene,
+  type BodyFigureView,
+  type BodyMapDetail,
+  type BodySex,
+  type Pt,
+} from "@/components/medicn/body-map-data"
+
+type BodyView = BodyFigureView
 
 /* -------------------------------------------------------------------------- */
 /*                                    Data                                    */
@@ -88,228 +95,17 @@ export function getLesionStatusLabel(status: LesionStatus): string {
 }
 
 /** "#3 Back of forearm (left)" — `number` is the 1-based pin number. */
-export function getLesionTitle(lesion: Lesion, number: number): string {
-  return `#${number} ${getBodyRegionLabel(lesion.region)}`
+export function getLesionTitle(lesion: Lesion, number: number, sex?: BodySex): string {
+  return `#${number} ${getBodyRegionLabel(lesion.region, { sex })}`
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                  Geometry                                  */
 /* -------------------------------------------------------------------------- */
 
-/*
- * The silhouette and region cells below are kept in sync with body-map.tsx,
- * which does not export its geometry. Region *ids* and labels are imported, and
- * `REGION_CELLS` is typed against `BodyRegionId`, so a region added or renamed
- * there is a type error here.
- */
-
-type Pt = readonly [number, number]
-type Cubic = readonly [number, number, number, number, number, number]
-
-const CX = 120
-const VIEWBOX = "28 2 184 496"
-const [VB_X, VB_Y, VB_W, VB_H] = VIEWBOX.split(" ").map(Number)
-
-// kept in sync with body-map.tsx (HALF_START / HALF)
-const HALF_START: Pt = [120, 10]
-const HALF: readonly Cubic[] = [
-  [107, 10, 97.5, 19.5, 97, 34],
-  [96.6, 45, 97.5, 53, 100, 59.5],
-  [102.5, 65.5, 105.5, 70, 110, 72.5],
-  [110.6, 78, 110.6, 84, 109.4, 88.5],
-  [104, 92.5, 91, 95, 80, 99],
-  [70, 102.5, 63.5, 110, 63, 123],
-  [62.5, 141, 58.5, 160, 57.5, 176],
-  [57, 186, 55, 195, 53.5, 204],
-  [51.5, 221, 48.5, 242, 46.5, 259],
-  [44.5, 265, 41, 272, 40.5, 280],
-  [40, 288, 41.5, 296, 42, 303],
-  [43, 314, 47.5, 323, 53, 323],
-  [58.5, 323, 61.5, 315, 62.3, 304],
-  [63.2, 292, 64, 279, 62.5, 266],
-  [62.5, 248, 66, 229, 69, 214],
-  [70, 207, 71, 201.5, 72, 196],
-  [74, 176, 77, 157, 80, 147],
-  [81.5, 141.5, 83, 137.5, 84.5, 136],
-  [86, 140, 87, 151, 87, 163],
-  [87, 178, 84.5, 192, 84.5, 205],
-  [84.5, 222, 77, 238, 76, 256],
-  [75, 281, 76, 310, 80.5, 335],
-  [83, 346, 84, 355, 83.2, 365],
-  [82, 376, 79.5, 390, 81, 410],
-  [83, 430, 89.5, 448, 91, 460],
-  [91.5, 468, 87.5, 478, 87.5, 485],
-  [87.5, 490, 92, 492, 99, 492],
-  [104, 492, 108, 492, 111, 491],
-  [114, 490, 114.5, 486, 113.5, 481],
-  [112.5, 474, 109.5, 467, 109, 458],
-  [107.5, 444, 104, 424, 104.5, 404],
-  [105, 388, 107.5, 374, 107.5, 362],
-  [107.5, 352, 108.5, 344, 109.5, 337],
-  [112, 314, 116.5, 291, 118.5, 280],
-  [119, 276, 119.5, 273, 120, 272],
-]
-
-const mirrorX = (x: number) => 2 * CX - x
-
-const OUTLINE_PATH = (() => {
-  const f = (n: number) => +n.toFixed(2)
-  let d = `M${HALF_START[0]} ${HALF_START[1]}`
-  for (const c of HALF) d += `C${c.map(f).join(" ")}`
-  for (let i = HALF.length - 1; i >= 0; i--) {
-    const c = HALF[i]
-    const start = i === 0 ? HALF_START : ([HALF[i - 1][4], HALF[i - 1][5]] as Pt)
-    d += `C${[mirrorX(c[2]), c[3], mirrorX(c[0]), c[1], mirrorX(start[0]), start[1]].map(f).join(" ")}`
-  }
-  return d + "Z"
-})()
-
-// kept in sync with body-map.tsx (DETAIL_HALF)
-const DETAIL_HALF: Record<BodyView, string[]> = {
-  front: [
-    "M108 95.5C101 97 92 98.5 84 100.5",
-    "M89 149C96 158 106 160 116.5 156",
-    "M95.5 351C92.5 351 91.5 354.5 92 357.5C92.5 361 98.5 361 99 357.5C99.5 354.5 98.5 351 95.5 351",
-  ],
-  back: [
-    "M105 112C101.5 126 101 140 106.5 152",
-    "M92 117C96 116 101 116 104.5 113",
-    "M86 293.5C95 299 108 298.5 117.5 293.5",
-    "M88 358C93 360.5 99 360.5 104 358",
-  ],
-}
-const mirrorPath = (d: string) =>
-  d.replace(/(-?\d*\.?\d+) (-?\d*\.?\d+)/g, (_, x: string, y: string) => `${+mirrorX(Number(x)).toFixed(2)} ${y}`)
-const DETAIL_PATHS: Record<BodyView, string> = {
-  front: [...DETAIL_HALF.front, ...DETAIL_HALF.front.map(mirrorPath)].join("") + "M120 214a1.1 1.6 0 1 0 0.01 0Z",
-  back: [...DETAIL_HALF.back, ...DETAIL_HALF.back.map(mirrorPath)].join(""),
-}
-
-// kept in sync with body-map.tsx (seams, CELL, REGION_CELLS). Inside the
-// silhouette these convex cells tile the body exactly as body-map's regions do.
-const SEAM_ARMPIT: Pt = [84.5, 136]
-const SEAM_WAIST: Pt = [77.5, 205]
-const SEAM_HIP: Pt = [68.5, 250]
-const lerpSeam = (a: Pt, b: Pt, y: number): Pt => [a[0] + ((b[0] - a[0]) * (y - a[1])) / (b[1] - a[1]), y]
-const ARM_SEAM_188 = lerpSeam(SEAM_ARMPIT, SEAM_WAIST, 188)
-const CHEST_SEAM_170 = lerpSeam(SEAM_ARMPIT, SEAM_WAIST, 170)
-const ARM_SEAM_214 = lerpSeam(SEAM_WAIST, SEAM_HIP, 214)
-const GROIN: Pt = [120, 292]
-const INGUINAL_242 = lerpSeam(SEAM_WAIST, GROIN, 242)
-const INGUINAL_268 = lerpSeam(SEAM_WAIST, GROIN, 268)
-const Y_FACE = 44
-const Y_NECK = 75
-const Y_THIGH = 340
-const Y_KNEE = 374
-const Y_ANKLE = 452
-
-const CELL = {
-  head: [[20, 0], [220, 0], [220, Y_FACE], [20, Y_FACE]],
-  face: [[20, Y_FACE], [220, Y_FACE], [220, Y_NECK], [20, Y_NECK]],
-  headBack: [[20, 0], [220, 0], [220, Y_NECK], [20, Y_NECK]],
-  neck: [[97, Y_NECK], [143, Y_NECK], [143, 92], [120, 100], [97, 92]],
-  shoulder: [[0, Y_NECK], [97, Y_NECK], [97, 92], SEAM_ARMPIT, [0, 166]],
-  chest: [[97, 92], [120, 100], [120, 170], CHEST_SEAM_170, SEAM_ARMPIT],
-  upperBack: [[97, 92], [120, 100], [120, 205], SEAM_WAIST, SEAM_ARMPIT],
-  upperArm: [[0, 166], SEAM_ARMPIT, ARM_SEAM_188, [0, 188]],
-  elbow: [[0, 188], ARM_SEAM_188, SEAM_WAIST, ARM_SEAM_214, [0, 214]],
-  forearm: [[0, 214], ARM_SEAM_214, SEAM_HIP, [SEAM_HIP[0], 262], [0, 262]],
-  hand: [[0, 262], [SEAM_HIP[0], 262], [SEAM_HIP[0], Y_THIGH], [0, Y_THIGH]],
-  upperAbdomen: [CHEST_SEAM_170, [mirrorX(CHEST_SEAM_170[0]), 170], [mirrorX(SEAM_WAIST[0]), 205], SEAM_WAIST],
-  lowerAbdomen: [SEAM_WAIST, [mirrorX(SEAM_WAIST[0]), 205], [mirrorX(INGUINAL_242[0]), 242], INGUINAL_242],
-  pelvis: [INGUINAL_242, [mirrorX(INGUINAL_242[0]), 242], GROIN],
-  hip: [SEAM_WAIST, INGUINAL_268, [SEAM_HIP[0], 284], SEAM_HIP],
-  thigh: [[SEAM_HIP[0], 284], INGUINAL_268, GROIN, [120, Y_THIGH], [SEAM_HIP[0], Y_THIGH]],
-  lowerBack: [SEAM_WAIST, [120, 205], [120, 250], SEAM_HIP],
-  buttock: [SEAM_HIP, [120, 250], [120, 303], [SEAM_HIP[0], 303]],
-  thighBack: [[SEAM_HIP[0], 303], [120, 303], [120, Y_THIGH], [SEAM_HIP[0], Y_THIGH]],
-  knee: [[0, Y_THIGH], [120, Y_THIGH], [120, Y_KNEE], [0, Y_KNEE]],
-  shin: [[0, Y_KNEE], [120, Y_KNEE], [120, Y_ANKLE], [0, Y_ANKLE]],
-  foot: [[0, Y_ANKLE], [120, Y_ANKLE], [120, 520], [0, 520]],
-} satisfies Record<string, readonly Pt[]>
-
-type CellName = keyof typeof CELL
-
-const REGION_CELLS: Record<BodyRegionId, [CellName, boolean]> = {
-  "front-head": ["head", false],
-  "front-face": ["face", false],
-  "front-neck": ["neck", false],
-  "front-shoulder-right": ["shoulder", false],
-  "front-shoulder-left": ["shoulder", true],
-  "front-chest-right": ["chest", false],
-  "front-chest-left": ["chest", true],
-  "front-upper-arm-right": ["upperArm", false],
-  "front-upper-arm-left": ["upperArm", true],
-  "front-elbow-right": ["elbow", false],
-  "front-elbow-left": ["elbow", true],
-  "front-forearm-right": ["forearm", false],
-  "front-forearm-left": ["forearm", true],
-  "front-hand-right": ["hand", false],
-  "front-hand-left": ["hand", true],
-  "front-upper-abdomen": ["upperAbdomen", false],
-  "front-lower-abdomen": ["lowerAbdomen", false],
-  "front-pelvis": ["pelvis", false],
-  "front-hip-right": ["hip", false],
-  "front-hip-left": ["hip", true],
-  "front-thigh-right": ["thigh", false],
-  "front-thigh-left": ["thigh", true],
-  "front-knee-right": ["knee", false],
-  "front-knee-left": ["knee", true],
-  "front-shin-right": ["shin", false],
-  "front-shin-left": ["shin", true],
-  "front-foot-right": ["foot", false],
-  "front-foot-left": ["foot", true],
-  "back-head": ["headBack", false],
-  "back-neck": ["neck", false],
-  "back-shoulder-left": ["shoulder", false],
-  "back-shoulder-right": ["shoulder", true],
-  "back-upper-back-left": ["upperBack", false],
-  "back-upper-back-right": ["upperBack", true],
-  "back-upper-arm-left": ["upperArm", false],
-  "back-upper-arm-right": ["upperArm", true],
-  "back-elbow-left": ["elbow", false],
-  "back-elbow-right": ["elbow", true],
-  "back-forearm-left": ["forearm", false],
-  "back-forearm-right": ["forearm", true],
-  "back-hand-left": ["hand", false],
-  "back-hand-right": ["hand", true],
-  "back-lower-back-left": ["lowerBack", false],
-  "back-lower-back-right": ["lowerBack", true],
-  "back-buttock-left": ["buttock", false],
-  "back-buttock-right": ["buttock", true],
-  "back-thigh-left": ["thighBack", false],
-  "back-thigh-right": ["thighBack", true],
-  "back-knee-left": ["knee", false],
-  "back-knee-right": ["knee", true],
-  "back-calf-left": ["shin", false],
-  "back-calf-right": ["shin", true],
-  "back-heel-left": ["foot", false],
-  "back-heel-right": ["foot", true],
-}
-
-const REGION_POLYGONS: Record<BodyView, { id: BodyRegionId; poly: readonly Pt[]; centre: Pt }[]> = (() => {
-  const out: Record<BodyView, { id: BodyRegionId; poly: readonly Pt[]; centre: Pt }[]> = { front: [], back: [] }
-  for (const region of BODY_REGIONS) {
-    const [name, mirrored] = REGION_CELLS[region.id]
-    const poly = mirrored ? CELL[name].map(([x, y]) => [mirrorX(x), y] as Pt) : CELL[name]
-    const centre: Pt = [
-      poly.reduce((s, p) => s + p[0], 0) / poly.length,
-      poly.reduce((s, p) => s + p[1], 0) / poly.length,
-    ]
-    out[region.view].push({ id: region.id, poly, centre })
-  }
-  return out
-})()
-
-function pointInPolygon([px, py]: Pt, poly: readonly Pt[]) {
-  let inside = false
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-    const [xi, yi] = poly[i]
-    const [xj, yj] = poly[j]
-    if (yi > py !== yj > py && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) inside = !inside
-  }
-  return inside
-}
+// Silhouettes and region cells are shared with BodyMap (body-map-data.ts).
+const [VB_X, VB_Y, VB_W, VB_H] = BODY_VIEWBOX
+const VIEWBOX = BODY_VIEWBOX.join(" ")
 
 const toViewBox = (x: number, y: number): Pt => [VB_X + x * VB_W, VB_Y + y * VB_H]
 const fromViewBox = ([vx, vy]: Pt): Pt => [
@@ -318,24 +114,17 @@ const fromViewBox = ([vx, vy]: Pt): Pt => [
 ]
 
 /**
- * Body-map region for a normalised point on the given view: point-in-region,
- * falling back to the nearest region centre. Pure, so it also runs on the server.
+ * Body-map region for a normalised point on the given view: point-in-region
+ * (finest layer first), falling back to the nearest region. Pure, so it also
+ * runs on the server. Defaults to the detailed male figure.
  */
-export function detectBodyRegion(view: BodyView, x: number, y: number): BodyRegionId {
-  const p = toViewBox(x, y)
-  const regions = REGION_POLYGONS[view]
-  const hit = regions.find((r) => pointInPolygon(p, r.poly))
-  if (hit) return hit.id
-  let best = regions[0]
-  let bestDist = Infinity
-  for (const r of regions) {
-    const d = (r.centre[0] - p[0]) ** 2 + (r.centre[1] - p[1]) ** 2
-    if (d < bestDist) {
-      bestDist = d
-      best = r
-    }
-  }
-  return best.id
+export function detectBodyRegion(
+  view: BodyView,
+  x: number,
+  y: number,
+  options: { sex?: BodySex; detail?: BodyMapDetail } = {}
+): string {
+  return hitTestBodyMapScene(getBodyMapScene(view, options), toViewBox(x, y))
 }
 
 /* -------------------------------------------------------------------------- */
@@ -419,6 +208,8 @@ function DefaultPin({ lesion, number, selected }: LesionPinRenderProps) {
 
 interface FigureProps {
   view: BodyView
+  sex: BodySex
+  detail: BodyMapDetail
   lesions: { lesion: Lesion; number: number }[]
   selectedId: string | null
   readOnly: boolean
@@ -436,6 +227,8 @@ const NUDGE_LARGE = 5
 
 function LesionFigure({
   view,
+  sex,
+  detail,
   lesions,
   selectedId,
   readOnly,
@@ -467,6 +260,7 @@ function LesionFigure({
   }
 
   const sideLabels: [string, string] = view === "front" ? ["R", "L"] : ["L", "R"]
+  const scene = getBodyMapScene(view, { sex, detail })
 
   return (
     <svg
@@ -495,7 +289,7 @@ function LesionFigure({
       <path
         ref={outlineRef}
         aria-hidden="true"
-        d={OUTLINE_PATH}
+        d={scene.outline}
         className={cn(
           "fill-(--body-fill) stroke-foreground/25 [stroke-linejoin:round] [stroke-width:1.25] dark:stroke-foreground/30",
           !readOnly && "cursor-crosshair"
@@ -513,7 +307,7 @@ function LesionFigure({
       />
       <path
         aria-hidden="true"
-        d={DETAIL_PATHS[view]}
+        d={scene.hints}
         className="pointer-events-none fill-none stroke-foreground/15 [stroke-linecap:round] [stroke-width:0.9]"
       />
 
@@ -521,7 +315,7 @@ function LesionFigure({
         {lesions.map(({ lesion, number }) => {
           const [vx, vy] = toViewBox(lesion.x, lesion.y)
           const selected = lesion.id === selectedId
-          const title = getLesionTitle(lesion, number)
+          const title = getLesionTitle(lesion, number, sex)
           const description = [
             title,
             `${view} view`,
@@ -656,6 +450,10 @@ export interface LesionMapProps extends Omit<React.ComponentProps<"div">, "defau
   newLesionDefaults?: Partial<Pick<Lesion, "type" | "status" | "date">>
   /** Custom SVG pin content, drawn centred on (0, 0) in viewBox units (~6.5 radius). */
   renderPin?: (props: LesionPinRenderProps) => React.ReactNode
+  /** Silhouette (same region ids for both). */
+  sex?: BodySex
+  /** Region set used for auto-detected `region`: fine detailed regions or the original simple ones. */
+  detail?: BodyMapDetail
 }
 
 const EMPTY_LESIONS: Lesion[] = []
@@ -678,6 +476,8 @@ export function LesionMap({
   showLegend = true,
   newLesionDefaults,
   renderPin = renderDefaultPin,
+  sex = "male",
+  detail = "detailed",
   className,
   ...props
 }: LesionMapProps) {
@@ -732,7 +532,7 @@ export function LesionMap({
       view: v,
       x,
       y,
-      region: detectBodyRegion(v, x, y),
+      region: detectBodyRegion(v, x, y, { sex, detail }),
       type: newLesionDefaults?.type ?? "other",
       status: newLesionDefaults?.status ?? "new",
       ...(newLesionDefaults?.date ? { date: newLesionDefaults.date } : {}),
@@ -745,7 +545,7 @@ export function LesionMap({
   const handleMove = (id: string, x: number, y: number) => {
     const lesion = value.find((l) => l.id === id)
     if (!lesion) return
-    update(id, { x, y, region: detectBodyRegion(lesion.view, x, y) })
+    update(id, { x, y, region: detectBodyRegion(lesion.view, x, y, { sex, detail }) })
   }
 
   const handleRemove = (id: string) => {
@@ -763,6 +563,8 @@ export function LesionMap({
   const figure = (v: BodyView) => (
     <LesionFigure
       view={v}
+      sex={sex}
+      detail={detail}
       lesions={byView[v]}
       selectedId={selectedId}
       readOnly={readOnly}
@@ -847,6 +649,8 @@ export function LesionMap({
           className="w-full md:max-w-xs"
           lesion={selected.lesion}
           number={selected.number}
+          sex={sex}
+          detail={detail}
           onChange={(next) => setValue(value.map((l) => (l.id === next.id ? next : l)))}
           onRemove={() => handleRemove(selected.lesion.id)}
           onClose={() => handleSelect(null)}
@@ -869,16 +673,33 @@ export interface LesionEditorProps extends Omit<React.ComponentProps<"div">, "on
   onRemove?: () => void
   /** Shows a close button. */
   onClose?: () => void
+  /** Silhouette used for region labels. */
+  sex?: BodySex
+  /** Region set offered in the Region select. */
+  detail?: BodyMapDetail
 }
 
-export function LesionEditor({ lesion, number, onChange, onRemove, onClose, className, ...props }: LesionEditorProps) {
+export function LesionEditor({
+  lesion,
+  number,
+  onChange,
+  onRemove,
+  onClose,
+  sex,
+  detail = "detailed",
+  className,
+  ...props
+}: LesionEditorProps) {
   const id = React.useId()
   const set = <K extends keyof Lesion>(key: K, v: Lesion[K]) => {
     const next = { ...lesion, [key]: v }
     if (v === undefined || v === "") delete next[key]
     onChange(next)
   }
-  const regions = BODY_REGIONS.filter((r) => r.view === lesion.view)
+  const regions = getBodyRegions(lesion.view, { sex, detail })
+  if (!regions.some((r) => r.id === lesion.region)) {
+    regions.unshift({ id: lesion.region, label: getBodyRegionLabel(lesion.region, { sex }) })
+  }
   const status = STATUS_BY_VALUE[lesion.status]
   const headingId = `${id}-heading`
 
@@ -893,7 +714,7 @@ export function LesionEditor({ lesion, number, onChange, onRemove, onClose, clas
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 flex-col gap-1">
           <h3 id={headingId} className="truncate text-sm font-semibold">
-            {number !== undefined ? getLesionTitle(lesion, number) : getBodyRegionLabel(lesion.region)}
+            {number !== undefined ? getLesionTitle(lesion, number, sex) : getBodyRegionLabel(lesion.region, { sex })}
           </h3>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <ClinicalStatusBadge status={status?.tone ?? "unknown"}>{status?.label ?? lesion.status}</ClinicalStatusBadge>
@@ -1026,10 +847,13 @@ export interface LesionListProps extends Omit<React.ComponentProps<"div">, "chil
   /** Called when a row is clicked (pass to `LesionMap` to focus the pin). */
   onSelectedIdChange?: (id: string | null) => void
   emptyText?: React.ReactNode
+  /** Uses sex-specific region labels ("Left breast"). */
+  sex?: BodySex
 }
 
 export function LesionList({
   value,
+  sex,
   selectedId,
   onSelectedIdChange,
   emptyText = "No lesions recorded",
@@ -1078,7 +902,7 @@ export function LesionList({
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="flex items-center justify-between gap-2">
                       <span className="truncate font-medium">
-                        {getLesionTitle(lesion, i + 1)}
+                        {getLesionTitle(lesion, i + 1, sex)}
                         <span className="sr-only">, {lesion.view} view</span>
                       </span>
                       <ClinicalStatusBadge status={status?.tone ?? "unknown"}>
