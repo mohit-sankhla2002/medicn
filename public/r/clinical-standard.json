@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "clinical-standard",
+  "title": "Standard clinical colours",
+  "description": "Green, amber, orange and red, as used in most early-warning charts.",
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "themes"
+  ],
+  "type": "registry:theme"
+}

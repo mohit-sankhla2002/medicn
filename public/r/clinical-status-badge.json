@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "clinical-status-badge",
+  "title": "Clinical Status Badge",
+  "description": "Color-coded status pill for results and observations: normal, borderline, abnormal, critical.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/clinical-status-badge.tsx",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type ClinicalStatus = \"normal\" | \"watch\" | \"abnormal\" | \"critical\" | \"info\" | \"unknown\"\n\nexport const CLINICAL_STATUS_LABELS: Record<ClinicalStatus, string> = {\n  normal: \"Normal\",\n  watch: \"Borderline\",\n  abnormal: \"Abnormal\",\n  critical: \"Critical\",\n  info: \"Info\",\n  unknown: \"No data\",\n}\n\nconst clinicalStatusBadgeVariants = cva(\n  \"inline-flex h-5 w-fit shrink-0 items-center gap-1.5 rounded-full border px-2 text-xs font-medium whitespace-nowrap [&>svg]:size-3\",\n  {\n    variants: {\n      status: {\n        normal: \"border-clinical-normal/25 bg-clinical-normal/10 text-clinical-normal-foreground\",\n        watch: \"border-clinical-watch/25 bg-clinical-watch/10 text-clinical-watch-foreground\",\n        abnormal: \"border-clinical-abnormal/25 bg-clinical-abnormal/10 text-clinical-abnormal-foreground\",\n        critical: \"border-clinical-critical/25 bg-clinical-critical/10 text-clinical-critical-foreground\",\n        info: \"border-clinical-info/25 bg-clinical-info/10 text-clinical-info-foreground\",\n        unknown: \"border-border bg-muted text-muted-foreground\",\n      },\n    },\n    defaultVariants: { status: \"unknown\" },\n  }\n)\n\nconst dotClasses: Record<ClinicalStatus, string> = {\n  normal: \"bg-clinical-normal\",\n  watch: \"bg-clinical-watch\",\n  abnormal: \"bg-clinical-abnormal\",\n  critical: \"bg-clinical-critical\",\n  info: \"bg-clinical-info\",\n  unknown: \"bg-muted-foreground/50\",\n}\n\nexport interface ClinicalStatusBadgeProps\n  extends React.ComponentProps<\"span\">,\n    VariantProps<typeof clinicalStatusBadgeVariants> {\n  /** Show a leading status dot. Critical dots pulse unless reduced motion is preferred. */\n  dot?: boolean\n}\n\nexport function ClinicalStatusBadge({\n  status = \"unknown\",\n  dot = true,\n  className,\n  children,\n  ...props\n}: ClinicalStatusBadgeProps) {\n  const value = status ?? \"unknown\"\n  return (\n    <span\n      data-slot=\"clinical-status-badge\"\n      data-status={value}\n      className={cn(clinicalStatusBadgeVariants({ status: value }), className)}\n      {...props}\n    >\n      {dot && (\n        <span aria-hidden className=\"relative flex size-1.5\">\n          {value === \"critical\" && (\n            <span className=\"absolute inline-flex size-full animate-ping rounded-full bg-clinical-critical opacity-60 motion-reduce:hidden\" />\n          )}\n          <span className={cn(\"relative inline-flex size-1.5 rounded-full\", dotClasses[value])} />\n        </span>\n      )}\n      {children ?? CLINICAL_STATUS_LABELS[value]}\n    </span>\n  )\n}\n\nexport { clinicalStatusBadgeVariants }\n",
+      "type": "registry:component"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "clinical-data"
+  ],
+  "type": "registry:component"
+}

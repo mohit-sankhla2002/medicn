@@ -1,0 +1,1289 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "medicn",
+  "homepage": "https://medicn.vercel.app",
+  "items": [
+    {
+      "name": "appointment-calendar",
+      "type": "registry:component",
+      "title": "Appointment Calendar",
+      "description": "Clinic scheduling calendar with day, week and month views, provider columns, overlap layout and status colors.",
+      "categories": [
+        "scheduling"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/appointment-calendar.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "appointment-slot-picker",
+      "type": "registry:component",
+      "title": "Appointment Slot Picker",
+      "description": "Patient self-booking picker: choose a day, then an available time grouped by morning, afternoon and evening.",
+      "categories": [
+        "scheduling"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "calendar"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/appointment-slot-picker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "clinical-status-badge",
+      "type": "registry:component",
+      "title": "Clinical Status Badge",
+      "description": "Color-coded status pill for results and observations: normal, borderline, abnormal, critical.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/clinical-status-badge.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "vital-signs",
+      "type": "registry:component",
+      "title": "Vital Signs",
+      "description": "Vital sign cards with reference ranges, automatic status classification and trend sparklines.",
+      "categories": [
+        "clinical-data"
+      ],
+      "registryDependencies": [
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/vital-signs.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "medication-list",
+      "type": "registry:component",
+      "title": "Medication List",
+      "description": "Active medication list with dose, route, frequency, PRN and high-alert flags.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/medication-list.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "lab-results",
+      "type": "registry:component",
+      "title": "Lab Results",
+      "description": "Results-review table grouped into collapsible panels, with FHIR interpretation flags, reference ranges, change since the previous result, and a trend chart for each result.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "recharts",
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "card",
+        "chart",
+        "collapsible",
+        "label",
+        "switch",
+        "table",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/lab-results.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "vitals-chart",
+      "type": "registry:component",
+      "title": "Vitals Chart",
+      "description": "Trend chart of vital signs over time, with a shaded normal band and dots coloured by clinical status, like EHR flowsheet graphs and NEWS2 charts.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "recharts",
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "chart",
+        "table",
+        "toggle-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json",
+        "https://medicn.vercel.app/r/vital-signs.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/vitals-chart.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "medication-form",
+      "type": "registry:component",
+      "title": "Medication Form",
+      "description": "Structured medication order entry (sig builder) with drug search, quick-pick presets, PRN, high-alert warning and a live plain-language sig preview.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "command",
+        "field",
+        "input",
+        "label",
+        "popover",
+        "select",
+        "switch",
+        "textarea",
+        "https://medicn.vercel.app/r/medication-list.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/medication-form.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "clinical-timeline",
+      "type": "registry:component",
+      "title": "Clinical Timeline",
+      "description": "Chronological patient activity feed (visits, labs, imaging, medications, immunizations, messages) with type filters, search, day or month grouping and load more.",
+      "categories": [
+        "patient"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "toggle-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/clinical-timeline.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "allergy-list",
+      "type": "registry:component",
+      "title": "Allergy List",
+      "description": "View and edit allergies and intolerances (FHIR AllergyIntolerance) with criticality, reactions, verification, no-known-allergies handling and a built-in entry form.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "alert-dialog",
+        "button",
+        "collapsible",
+        "command",
+        "dialog",
+        "dropdown-menu",
+        "field",
+        "input",
+        "label",
+        "popover",
+        "radio-group",
+        "select",
+        "switch",
+        "textarea",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/allergy-list.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "problem-list",
+      "type": "registry:component",
+      "title": "Problem List",
+      "description": "Patient problem list (FHIR Condition) with Active/Resolved/All filters, coded diagnoses, async code search and resolve/reactivate actions.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "alert-dialog",
+        "button",
+        "checkbox",
+        "command",
+        "dialog",
+        "dropdown-menu",
+        "field",
+        "input",
+        "popover",
+        "select",
+        "tabs",
+        "textarea",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/problem-list.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "body-map",
+      "type": "registry:component",
+      "title": "Body Map",
+      "description": "Interactive front/back human anatomy map for marking where the problem is, with heat-map intensity and selection chips.",
+      "categories": [
+        "anatomy"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "toggle-group"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/body-map.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "pain-scale",
+      "type": "registry:component",
+      "title": "Pain Scale",
+      "description": "0–10 Numeric Rating Scale with color bands, face descriptors and full keyboard support.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/pain-scale.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "vitals-form",
+      "type": "registry:component",
+      "title": "Vitals Form",
+      "description": "Vital signs entry with units, metric/imperial toggle, live status, plausibility checks and BMI.",
+      "categories": [
+        "forms"
+      ],
+      "registryDependencies": [
+        "button",
+        "field",
+        "input",
+        "toggle-group",
+        "https://medicn.vercel.app/r/clinical-status-badge.json",
+        "https://medicn.vercel.app/r/vital-signs.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/vitals-form.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-header",
+      "type": "registry:component",
+      "title": "Patient Header",
+      "description": "Patient banner with demographics, copyable MRN, allergy chips and safety flags.",
+      "categories": [
+        "patient"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/patient-header.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "clinic-dashboard",
+      "type": "registry:block",
+      "title": "Clinic Dashboard",
+      "description": "Sidebar dashboard with KPIs, a provider day schedule, waiting room triage and new results.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "card",
+        "input",
+        "separator",
+        "sidebar",
+        "tooltip",
+        "https://medicn.vercel.app/r/appointment-calendar.json",
+        "https://medicn.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/clinic-dashboard/page.tsx",
+          "type": "registry:page",
+          "target": "app/clinic-dashboard/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "patient-chart",
+      "type": "registry:block",
+      "title": "Patient Chart",
+      "description": "Patient chart: banner, vitals, editable problem list and allergies, lab results with trends, medication orders, timeline and a SOAP note.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "dialog",
+        "field",
+        "tabs",
+        "textarea",
+        "https://medicn.vercel.app/r/allergy-list.json",
+        "https://medicn.vercel.app/r/clinical-timeline.json",
+        "https://medicn.vercel.app/r/lab-results.json",
+        "https://medicn.vercel.app/r/medication-form.json",
+        "https://medicn.vercel.app/r/medication-list.json",
+        "https://medicn.vercel.app/r/patient-header.json",
+        "https://medicn.vercel.app/r/problem-list.json",
+        "https://medicn.vercel.app/r/vital-signs.json",
+        "https://medicn.vercel.app/r/vitals-chart.json",
+        "https://medicn.vercel.app/r/vitals-form.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/patient-chart/page.tsx",
+          "type": "registry:page",
+          "target": "app/patient-chart/page.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "appointment-booking",
+      "type": "registry:block",
+      "title": "Appointment Booking",
+      "description": "Three-step patient self-booking flow: visit type, time slot, details and confirmation.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "checkbox",
+        "field",
+        "input",
+        "radio-group",
+        "textarea",
+        "https://medicn.vercel.app/r/appointment-slot-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/appointment-booking/page.tsx",
+          "type": "registry:page",
+          "target": "app/appointment-booking/page.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "symptom-report",
+      "type": "registry:block",
+      "title": "Symptom Report",
+      "description": "Patients mark affected areas on a body map, rate each one, and describe their symptoms.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "field",
+        "select",
+        "textarea",
+        "toggle-group",
+        "https://medicn.vercel.app/r/body-map.json",
+        "https://medicn.vercel.app/r/pain-scale.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/symptom-report/page.tsx",
+          "type": "registry:page",
+          "target": "app/symptom-report/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "patient-intake",
+      "type": "registry:block",
+      "title": "Patient Intake Form",
+      "description": "New-patient intake: demographics, contacts, insurance, history, medications, allergies, body map and consent.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "checkbox",
+        "field",
+        "input",
+        "radio-group",
+        "select",
+        "switch",
+        "textarea",
+        "https://medicn.vercel.app/r/body-map.json",
+        "https://medicn.vercel.app/r/pain-scale.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/patient-intake/page.tsx",
+          "type": "registry:page",
+          "target": "app/patient-intake/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "theme-teal",
+      "type": "registry:theme",
+      "title": "Teal theme",
+      "description": "Teal primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.52 0.1 192)",
+          "primary-foreground": "oklch(0.985 0 0)",
+          "ring": "oklch(0.62 0.09 192)",
+          "sidebar-primary": "oklch(0.52 0.1 192)",
+          "sidebar-primary-foreground": "oklch(0.985 0 0)",
+          "sidebar-ring": "oklch(0.62 0.09 192)",
+          "chart-1": "oklch(0.85 0.13 181)",
+          "chart-2": "oklch(0.7 0.12 183)",
+          "chart-3": "oklch(0.6 0.1 185)",
+          "chart-4": "oklch(0.51 0.09 186)",
+          "chart-5": "oklch(0.44 0.07 188)"
+        },
+        "dark": {
+          "primary": "oklch(0.74 0.12 188)",
+          "primary-foreground": "oklch(0.2 0.03 200)",
+          "ring": "oklch(0.56 0.09 190)",
+          "sidebar-primary": "oklch(0.74 0.12 188)",
+          "sidebar-primary-foreground": "oklch(0.2 0.03 200)",
+          "sidebar-ring": "oklch(0.56 0.09 190)",
+          "chart-1": "oklch(0.85 0.13 181)",
+          "chart-2": "oklch(0.7 0.12 183)",
+          "chart-3": "oklch(0.6 0.1 185)",
+          "chart-4": "oklch(0.51 0.09 186)",
+          "chart-5": "oklch(0.44 0.07 188)"
+        }
+      }
+    },
+    {
+      "name": "theme-blue",
+      "type": "registry:theme",
+      "title": "Blue theme",
+      "description": "Blue primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.488 0.243 264.376)",
+          "primary-foreground": "oklch(0.97 0.014 254.604)",
+          "ring": "oklch(0.708 0.165 254.624)",
+          "sidebar-primary": "oklch(0.488 0.243 264.376)",
+          "sidebar-primary-foreground": "oklch(0.97 0.014 254.604)",
+          "sidebar-ring": "oklch(0.708 0.165 254.624)",
+          "chart-1": "oklch(0.809 0.105 251.813)",
+          "chart-2": "oklch(0.623 0.214 259.815)",
+          "chart-3": "oklch(0.546 0.245 262.881)",
+          "chart-4": "oklch(0.488 0.243 264.376)",
+          "chart-5": "oklch(0.424 0.199 265.638)"
+        },
+        "dark": {
+          "primary": "oklch(0.623 0.214 259.815)",
+          "primary-foreground": "oklch(0.97 0.014 254.604)",
+          "ring": "oklch(0.488 0.243 264.376)",
+          "sidebar-primary": "oklch(0.623 0.214 259.815)",
+          "sidebar-primary-foreground": "oklch(0.97 0.014 254.604)",
+          "sidebar-ring": "oklch(0.488 0.243 264.376)",
+          "chart-1": "oklch(0.809 0.105 251.813)",
+          "chart-2": "oklch(0.623 0.214 259.815)",
+          "chart-3": "oklch(0.546 0.245 262.881)",
+          "chart-4": "oklch(0.488 0.243 264.376)",
+          "chart-5": "oklch(0.424 0.199 265.638)"
+        }
+      }
+    },
+    {
+      "name": "theme-violet",
+      "type": "registry:theme",
+      "title": "Violet theme",
+      "description": "Violet primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.541 0.281 293.009)",
+          "primary-foreground": "oklch(0.969 0.016 293.756)",
+          "ring": "oklch(0.702 0.183 293.541)",
+          "sidebar-primary": "oklch(0.541 0.281 293.009)",
+          "sidebar-primary-foreground": "oklch(0.969 0.016 293.756)",
+          "sidebar-ring": "oklch(0.702 0.183 293.541)",
+          "chart-1": "oklch(0.811 0.111 293.571)",
+          "chart-2": "oklch(0.606 0.25 292.717)",
+          "chart-3": "oklch(0.541 0.281 293.009)",
+          "chart-4": "oklch(0.491 0.27 292.581)",
+          "chart-5": "oklch(0.432 0.232 292.759)"
+        },
+        "dark": {
+          "primary": "oklch(0.606 0.25 292.717)",
+          "primary-foreground": "oklch(0.969 0.016 293.756)",
+          "ring": "oklch(0.541 0.281 293.009)",
+          "sidebar-primary": "oklch(0.606 0.25 292.717)",
+          "sidebar-primary-foreground": "oklch(0.969 0.016 293.756)",
+          "sidebar-ring": "oklch(0.541 0.281 293.009)",
+          "chart-1": "oklch(0.811 0.111 293.571)",
+          "chart-2": "oklch(0.606 0.25 292.717)",
+          "chart-3": "oklch(0.541 0.281 293.009)",
+          "chart-4": "oklch(0.491 0.27 292.581)",
+          "chart-5": "oklch(0.432 0.232 292.759)"
+        }
+      }
+    },
+    {
+      "name": "theme-rose",
+      "type": "registry:theme",
+      "title": "Rose theme",
+      "description": "Rose primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.586 0.253 17.585)",
+          "primary-foreground": "oklch(0.969 0.015 12.422)",
+          "ring": "oklch(0.712 0.194 13.428)",
+          "sidebar-primary": "oklch(0.586 0.253 17.585)",
+          "sidebar-primary-foreground": "oklch(0.969 0.015 12.422)",
+          "sidebar-ring": "oklch(0.712 0.194 13.428)",
+          "chart-1": "oklch(0.81 0.117 11.638)",
+          "chart-2": "oklch(0.645 0.246 16.439)",
+          "chart-3": "oklch(0.586 0.253 17.585)",
+          "chart-4": "oklch(0.514 0.222 16.935)",
+          "chart-5": "oklch(0.455 0.188 13.697)"
+        },
+        "dark": {
+          "primary": "oklch(0.645 0.246 16.439)",
+          "primary-foreground": "oklch(0.969 0.015 12.422)",
+          "ring": "oklch(0.586 0.253 17.585)",
+          "sidebar-primary": "oklch(0.645 0.246 16.439)",
+          "sidebar-primary-foreground": "oklch(0.969 0.015 12.422)",
+          "sidebar-ring": "oklch(0.586 0.253 17.585)",
+          "chart-1": "oklch(0.81 0.117 11.638)",
+          "chart-2": "oklch(0.645 0.246 16.439)",
+          "chart-3": "oklch(0.586 0.253 17.585)",
+          "chart-4": "oklch(0.514 0.222 16.935)",
+          "chart-5": "oklch(0.455 0.188 13.697)"
+        }
+      }
+    },
+    {
+      "name": "theme-orange",
+      "type": "registry:theme",
+      "title": "Orange theme",
+      "description": "Orange primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.646 0.222 41.116)",
+          "primary-foreground": "oklch(0.98 0.016 73.684)",
+          "ring": "oklch(0.75 0.183 55.934)",
+          "sidebar-primary": "oklch(0.646 0.222 41.116)",
+          "sidebar-primary-foreground": "oklch(0.98 0.016 73.684)",
+          "sidebar-ring": "oklch(0.75 0.183 55.934)",
+          "chart-1": "oklch(0.837 0.128 66.29)",
+          "chart-2": "oklch(0.705 0.213 47.604)",
+          "chart-3": "oklch(0.646 0.222 41.116)",
+          "chart-4": "oklch(0.553 0.195 38.402)",
+          "chart-5": "oklch(0.47 0.157 37.304)"
+        },
+        "dark": {
+          "primary": "oklch(0.705 0.213 47.604)",
+          "primary-foreground": "oklch(0.98 0.016 73.684)",
+          "ring": "oklch(0.646 0.222 41.116)",
+          "sidebar-primary": "oklch(0.705 0.213 47.604)",
+          "sidebar-primary-foreground": "oklch(0.98 0.016 73.684)",
+          "sidebar-ring": "oklch(0.646 0.222 41.116)",
+          "chart-1": "oklch(0.837 0.128 66.29)",
+          "chart-2": "oklch(0.705 0.213 47.604)",
+          "chart-3": "oklch(0.646 0.222 41.116)",
+          "chart-4": "oklch(0.553 0.195 38.402)",
+          "chart-5": "oklch(0.47 0.157 37.304)"
+        }
+      }
+    },
+    {
+      "name": "theme-green",
+      "type": "registry:theme",
+      "title": "Green theme",
+      "description": "Green primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.527 0.154 150.069)",
+          "primary-foreground": "oklch(0.982 0.018 155.826)",
+          "ring": "oklch(0.723 0.219 149.579)",
+          "sidebar-primary": "oklch(0.527 0.154 150.069)",
+          "sidebar-primary-foreground": "oklch(0.982 0.018 155.826)",
+          "sidebar-ring": "oklch(0.723 0.219 149.579)",
+          "chart-1": "oklch(0.871 0.15 154.449)",
+          "chart-2": "oklch(0.723 0.219 149.579)",
+          "chart-3": "oklch(0.627 0.194 149.214)",
+          "chart-4": "oklch(0.527 0.154 150.069)",
+          "chart-5": "oklch(0.448 0.119 151.328)"
+        },
+        "dark": {
+          "primary": "oklch(0.696 0.17 162.48)",
+          "primary-foreground": "oklch(0.262 0.051 172.552)",
+          "ring": "oklch(0.527 0.154 150.069)",
+          "sidebar-primary": "oklch(0.696 0.17 162.48)",
+          "sidebar-primary-foreground": "oklch(0.262 0.051 172.552)",
+          "sidebar-ring": "oklch(0.527 0.154 150.069)",
+          "chart-1": "oklch(0.871 0.15 154.449)",
+          "chart-2": "oklch(0.723 0.219 149.579)",
+          "chart-3": "oklch(0.627 0.194 149.214)",
+          "chart-4": "oklch(0.527 0.154 150.069)",
+          "chart-5": "oklch(0.448 0.119 151.328)"
+        }
+      }
+    },
+    {
+      "name": "theme-base",
+      "type": "registry:theme",
+      "title": "Mono theme",
+      "description": "Mono primary, ring and chart colours.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "primary": "oklch(0.205 0 0)",
+          "primary-foreground": "oklch(0.985 0 0)",
+          "ring": "oklch(0.708 0 0)",
+          "sidebar-primary": "oklch(0.205 0 0)",
+          "sidebar-primary-foreground": "oklch(0.985 0 0)",
+          "sidebar-ring": "oklch(0.708 0 0)",
+          "chart-1": "oklch(0.87 0 0)",
+          "chart-2": "oklch(0.556 0 0)",
+          "chart-3": "oklch(0.439 0 0)",
+          "chart-4": "oklch(0.371 0 0)",
+          "chart-5": "oklch(0.269 0 0)"
+        },
+        "dark": {
+          "primary": "oklch(0.922 0 0)",
+          "primary-foreground": "oklch(0.205 0 0)",
+          "ring": "oklch(0.556 0 0)",
+          "sidebar-primary": "oklch(0.922 0 0)",
+          "sidebar-primary-foreground": "oklch(0.205 0 0)",
+          "sidebar-ring": "oklch(0.556 0 0)",
+          "chart-1": "oklch(0.87 0 0)",
+          "chart-2": "oklch(0.556 0 0)",
+          "chart-3": "oklch(0.439 0 0)",
+          "chart-4": "oklch(0.371 0 0)",
+          "chart-5": "oklch(0.269 0 0)"
+        }
+      }
+    },
+    {
+      "name": "clinical-standard",
+      "type": "registry:theme",
+      "title": "Standard clinical colours",
+      "description": "Green, amber, orange and red, as used in most early-warning charts.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "clinical-colorblind",
+      "type": "registry:theme",
+      "title": "Colour-blind safe clinical colours",
+      "description": "Blue, yellow, orange and magenta. Distinct under red–green colour blindness.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.58 0.14 250)",
+          "clinical-normal-foreground": "oklch(0.45 0.13 255)",
+          "clinical-watch": "oklch(0.84 0.15 95)",
+          "clinical-watch-foreground": "oklch(0.47 0.09 85)",
+          "clinical-abnormal": "oklch(0.7 0.17 55)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.14 50)",
+          "clinical-critical": "oklch(0.55 0.21 350)",
+          "clinical-critical-foreground": "oklch(0.47 0.19 350)",
+          "clinical-info": "oklch(0.68 0.1 200)",
+          "clinical-info-foreground": "oklch(0.47 0.08 205)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.13 250)",
+          "clinical-normal-foreground": "oklch(0.84 0.08 250)",
+          "clinical-watch": "oklch(0.87 0.15 95)",
+          "clinical-watch-foreground": "oklch(0.91 0.12 95)",
+          "clinical-abnormal": "oklch(0.75 0.16 55)",
+          "clinical-abnormal-foreground": "oklch(0.85 0.1 60)",
+          "clinical-critical": "oklch(0.67 0.2 350)",
+          "clinical-critical-foreground": "oklch(0.82 0.11 350)",
+          "clinical-info": "oklch(0.76 0.1 200)",
+          "clinical-info-foreground": "oklch(0.86 0.06 200)"
+        }
+      }
+    },
+    {
+      "name": "clinical-muted",
+      "type": "registry:theme",
+      "title": "Muted clinical colours",
+      "description": "Lower-chroma tones for calm, low-stimulus interfaces.",
+      "categories": [
+        "themes"
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.62 0.08 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.06 160)",
+          "clinical-watch": "oklch(0.74 0.1 80)",
+          "clinical-watch-foreground": "oklch(0.48 0.07 70)",
+          "clinical-abnormal": "oklch(0.66 0.11 50)",
+          "clinical-abnormal-foreground": "oklch(0.5 0.09 45)",
+          "clinical-critical": "oklch(0.58 0.15 25)",
+          "clinical-critical-foreground": "oklch(0.48 0.13 25)",
+          "clinical-info": "oklch(0.62 0.07 235)",
+          "clinical-info-foreground": "oklch(0.47 0.06 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.68 0.08 160)",
+          "clinical-normal-foreground": "oklch(0.84 0.06 160)",
+          "clinical-watch": "oklch(0.78 0.1 80)",
+          "clinical-watch-foreground": "oklch(0.87 0.07 85)",
+          "clinical-abnormal": "oklch(0.7 0.11 50)",
+          "clinical-abnormal-foreground": "oklch(0.83 0.07 55)",
+          "clinical-critical": "oklch(0.64 0.15 25)",
+          "clinical-critical-foreground": "oklch(0.8 0.08 20)",
+          "clinical-info": "oklch(0.7 0.07 230)",
+          "clinical-info-foreground": "oklch(0.84 0.05 225)"
+        }
+      }
+    }
+  ]
+}

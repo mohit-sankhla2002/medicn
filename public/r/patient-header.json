@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "patient-header",
+  "title": "Patient Header",
+  "description": "Patient banner with demographics, copyable MRN, allergy chips and safety flags.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/patient-header.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { AlertTriangle, Check, Copy, ShieldAlert } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport type AllergySeverity = \"mild\" | \"moderate\" | \"severe\"\n\nexport interface PatientAllergy {\n  substance: string\n  reaction?: string\n  severity?: AllergySeverity\n}\n\nexport type PatientFlagTone = \"default\" | \"warning\" | \"critical\"\n\nexport interface PatientFlag {\n  label: string\n  tone?: PatientFlagTone\n}\n\nexport interface Patient {\n  name: string\n  /** Medical record number. */\n  mrn: string\n  /** Pre-formatted, e.g. \"Mar 14, 1986\". */\n  dateOfBirth?: string\n  age?: number\n  sex?: string\n  pronouns?: string\n  avatarUrl?: string\n  allergies?: PatientAllergy[]\n  flags?: PatientFlag[]\n  /** Extra label/value pairs, e.g. Primary care, Insurance, Language. */\n  details?: { label: string; value: React.ReactNode }[]\n}\n\nconst allergyClasses: Record<AllergySeverity, string> = {\n  mild: \"border-clinical-watch/25 bg-clinical-watch/10 text-clinical-watch-foreground\",\n  moderate: \"border-clinical-abnormal/25 bg-clinical-abnormal/10 text-clinical-abnormal-foreground\",\n  severe: \"border-clinical-critical/25 bg-clinical-critical/10 text-clinical-critical-foreground\",\n}\n\nconst flagClasses: Record<PatientFlagTone, string> = {\n  default: \"border-border bg-muted text-foreground\",\n  warning: \"border-clinical-watch/25 bg-clinical-watch/10 text-clinical-watch-foreground\",\n  critical: \"border-clinical-critical bg-clinical-critical text-white\",\n}\n\nfunction initials(name: string) {\n  return name\n    .split(/\\s+/)\n    .filter(Boolean)\n    .slice(0, 2)\n    .map((part) => part[0]?.toUpperCase())\n    .join(\"\")\n}\n\nfunction CopyMrn({ mrn }: { mrn: string }) {\n  const [copied, setCopied] = React.useState(false)\n  React.useEffect(() => {\n    if (!copied) return\n    const timeout = setTimeout(() => setCopied(false), 1500)\n    return () => clearTimeout(timeout)\n  }, [copied])\n  return (\n    <Button\n      type=\"button\"\n      variant=\"ghost\"\n      size=\"icon-xs\"\n      aria-label={copied ? \"MRN copied\" : \"Copy MRN\"}\n      onClick={() => {\n        void navigator.clipboard?.writeText(mrn)\n        setCopied(true)\n      }}\n    >\n      {copied ? <Check /> : <Copy />}\n    </Button>\n  )\n}\n\nexport interface PatientHeaderProps extends React.ComponentProps<\"header\"> {\n  patient: Patient\n  /** Right-aligned slot for actions such as \"Start visit\". */\n  actions?: React.ReactNode\n  /** Compact single-line banner for sticky use in charts. */\n  compact?: boolean\n}\n\nexport function PatientHeader({ patient, actions, compact = false, className, ...props }: PatientHeaderProps) {\n  const allergies = patient.allergies\n  const demographics = [\n    patient.age != null ? `${patient.age} y` : null,\n    patient.sex,\n    patient.pronouns,\n    patient.dateOfBirth ? `DOB ${patient.dateOfBirth}` : null,\n  ].filter(Boolean)\n\n  return (\n    <TooltipProvider>\n      <header\n        data-slot=\"patient-header\"\n        className={cn(\n          \"flex flex-col gap-4 rounded-xl border bg-card text-card-foreground\",\n          compact ? \"p-3\" : \"p-4 sm:p-5\",\n          className,\n        )}\n        {...props}\n      >\n        <div className=\"flex flex-wrap items-start gap-4\">\n          <Avatar className={cn(compact ? \"size-9\" : \"size-12\")}>\n            {patient.avatarUrl && <AvatarImage src={patient.avatarUrl} alt=\"\" />}\n            <AvatarFallback className=\"bg-primary/10 font-medium text-primary\">{initials(patient.name)}</AvatarFallback>\n          </Avatar>\n          <div className=\"flex min-w-0 flex-1 flex-col gap-1\">\n            <div className=\"flex flex-wrap items-center gap-x-3 gap-y-1\">\n              <h2 className={cn(\"font-semibold tracking-tight\", compact ? \"text-base\" : \"text-lg\")}>{patient.name}</h2>\n              {patient.flags?.map((flag) => (\n                <span\n                  key={flag.label}\n                  className={cn(\n                    \"inline-flex h-5 items-center rounded-md border px-1.5 text-[11px] font-semibold tracking-wide uppercase\",\n                    flagClasses[flag.tone ?? \"default\"],\n                  )}\n                >\n                  {flag.label}\n                </span>\n              ))}\n            </div>\n            <div className=\"flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground\">\n              {demographics.length > 0 && <span>{demographics.join(\" · \")}</span>}\n              <span className=\"inline-flex items-center gap-1\">\n                <span>\n                  MRN <span className=\"font-mono text-foreground\">{patient.mrn}</span>\n                </span>\n                <CopyMrn mrn={patient.mrn} />\n              </span>\n            </div>\n          </div>\n          {actions && <div className=\"flex shrink-0 items-center gap-2\">{actions}</div>}\n        </div>\n\n        {!compact && (\n          <div className=\"flex flex-col gap-3 border-t pt-4 sm:flex-row sm:items-start sm:gap-6\">\n            <div className=\"flex min-w-0 flex-1 flex-wrap items-center gap-1.5\">\n              <span className=\"mr-1 inline-flex items-center gap-1 text-xs font-medium text-muted-foreground\">\n                <ShieldAlert className=\"size-3.5\" />\n                Allergies\n              </span>\n              {allergies === undefined ? (\n                <span className=\"text-xs text-muted-foreground\">Not recorded</span>\n              ) : allergies.length === 0 ? (\n                <span className=\"inline-flex h-5 items-center rounded-full border border-clinical-normal/25 bg-clinical-normal/10 px-2 text-xs font-medium text-clinical-normal-foreground\">\n                  NKDA\n                </span>\n              ) : (\n                allergies.map((allergy) => (\n                  <Tooltip key={allergy.substance}>\n                    <TooltipTrigger asChild>\n                      <span\n                        tabIndex={0}\n                        className={cn(\n                          \"inline-flex h-5 items-center gap-1 rounded-full border px-2 text-xs font-medium outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n                          allergyClasses[allergy.severity ?? \"moderate\"],\n                        )}\n                      >\n                        {allergy.severity === \"severe\" && <AlertTriangle className=\"size-3\" />}\n                        {allergy.substance}\n                      </span>\n                    </TooltipTrigger>\n                    <TooltipContent>\n                      {allergy.reaction ?? \"Reaction not recorded\"}\n                      {allergy.severity ? ` · ${allergy.severity}` : \"\"}\n                    </TooltipContent>\n                  </Tooltip>\n                ))\n              )}\n            </div>\n            {patient.details && patient.details.length > 0 && (\n              <dl className=\"grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:flex sm:flex-wrap sm:justify-end\">\n                {patient.details.map((detail) => (\n                  <div key={detail.label} className=\"flex flex-col\">\n                    <dt className=\"text-xs text-muted-foreground\">{detail.label}</dt>\n                    <dd className=\"font-medium\">{detail.value}</dd>\n                  </div>\n                ))}\n              </dl>\n            )}\n          </div>\n        )}\n      </header>\n    </TooltipProvider>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "patient"
+  ],
+  "type": "registry:component"
+}

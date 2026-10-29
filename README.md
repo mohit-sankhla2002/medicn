@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# medicn
 
-## Getting Started
+Medical UI components and blocks for [shadcn/ui](https://ui.shadcn.com): appointment calendars, an interactive body map, pain scales, vitals, patient banners, and full clinical screens. Components are distributed as a shadcn registry, so the source is copied into your project and you own it.
 
-First, run the development server:
+> medicn is a UI toolkit, not a medical device. Clinical defaults such as reference ranges are generic. Validate them against your own protocols before you use them in patient care.
+
+## Use it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx shadcn@latest add https://medicn.vercel.app/r/body-map.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or register the namespace in `components.json` and use short names:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{ "registries": { "@medicn": "https://medicn.vercel.app/r/{name}.json" } }
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx shadcn@latest add @medicn/appointment-calendar @medicn/patient-intake
+```
 
-## Learn More
+## What's inside
 
-To learn more about Next.js, take a look at the following resources:
+| Category | Items |
+| --- | --- |
+| Scheduling | `appointment-calendar`, `appointment-slot-picker` |
+| Anatomy | `body-map` |
+| Forms | `pain-scale`, `vitals-form` |
+| Clinical data | `clinical-status-badge`, `vital-signs`, `medication-list` |
+| Patient | `patient-header` |
+| Blocks | `clinic-dashboard`, `patient-chart`, `appointment-booking`, `symptom-report`, `patient-intake` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Repository layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+components/medicn/     registry components (the code users install)
+components/blocks/     full-page blocks, installed as app/<name>/page.tsx
+components/demos/      examples rendered on the docs site
+components/docs/       docs site UI
+components/ui/         shadcn/ui primitives (not distributed)
+registry/items.ts      single source of truth: metadata, deps, demos, API docs
+scripts/build-registry.mts  generates registry.json and __registry__/*
+app/                   docs site (/, /docs, /docs/components/[name], /blocks, /view/[name])
+```
 
-## Deploy on Vercel
+## Develop
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm install
+pnpm dev               # docs site; regenerates the registry index first
+pnpm registry:build    # registry.json + public/r/*.json via `shadcn build`
+pnpm build             # runs registry:build, then next build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set `NEXT_PUBLIC_SITE_URL` to the deployed origin. Cross-item `registryDependencies` and the install commands in the docs are generated from it.
+
+### Add a component
+
+1. Create `components/medicn/<name>.tsx`. Import primitives from `@/components/ui/*`, other medicn components from `@/components/medicn/*`, and `cn` from `@/lib/utils`.
+2. Add demos at `components/demos/<name>-demo.tsx`, each with a default export.
+3. Add an entry to `registry/items.ts`. Use `medicn:<name>` for dependencies on other medicn items.
+4. Run `pnpm registry:build`. The docs page at `/docs/components/<name>` is generated from the entry.
+
+## Listing in the shadcn directory
+
+Deploy the site, then add an `@medicn` entry to `apps/v4/registry/directory.json` in [shadcn-ui/ui](https://github.com/shadcn-ui/ui). Run `pnpm validate:registries` and open a PR. See `/docs/registry` for details.

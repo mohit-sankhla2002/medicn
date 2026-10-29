@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "clinical-muted",
+  "title": "Muted clinical colours",
+  "description": "Lower-chroma tones for calm, low-stimulus interfaces.",
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.62 0.08 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.06 160)",
+      "clinical-watch": "oklch(0.74 0.1 80)",
+      "clinical-watch-foreground": "oklch(0.48 0.07 70)",
+      "clinical-abnormal": "oklch(0.66 0.11 50)",
+      "clinical-abnormal-foreground": "oklch(0.5 0.09 45)",
+      "clinical-critical": "oklch(0.58 0.15 25)",
+      "clinical-critical-foreground": "oklch(0.48 0.13 25)",
+      "clinical-info": "oklch(0.62 0.07 235)",
+      "clinical-info-foreground": "oklch(0.47 0.06 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.68 0.08 160)",
+      "clinical-normal-foreground": "oklch(0.84 0.06 160)",
+      "clinical-watch": "oklch(0.78 0.1 80)",
+      "clinical-watch-foreground": "oklch(0.87 0.07 85)",
+      "clinical-abnormal": "oklch(0.7 0.11 50)",
+      "clinical-abnormal-foreground": "oklch(0.83 0.07 55)",
+      "clinical-critical": "oklch(0.64 0.15 25)",
+      "clinical-critical-foreground": "oklch(0.8 0.08 20)",
+      "clinical-info": "oklch(0.7 0.07 230)",
+      "clinical-info-foreground": "oklch(0.84 0.05 225)"
+    }
+  },
+  "categories": [
+    "themes"
+  ],
+  "type": "registry:theme"
+}
