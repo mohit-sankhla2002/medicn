@@ -5,7 +5,7 @@ export const siteConfig = {
   // Set NEXT_PUBLIC_SITE_URL to the deployed origin; registry URLs are generated from it.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://medicn.vercel.app",
   links: {
-    github: "https://github.com/medicn/medicn",
+    github: "https://github.com/mohit-sankhla2002/medicn",
   },
 }
 
