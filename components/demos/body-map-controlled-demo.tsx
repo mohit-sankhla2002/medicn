@@ -2,12 +2,13 @@
 
 import * as React from "react"
 
-import { BodyMap, type BodyView } from "@/components/medicn/body-map"
+import { BodyMap, type BodyFocusPart, type BodyView } from "@/components/medicn/body-map"
 import { Button } from "@/components/ui/button"
 
 export default function BodyMapControlledDemo() {
   const [view, setView] = React.useState<BodyView>("front")
-  const [value, setValue] = React.useState<string[]>(["front-knee-right"])
+  const [value, setValue] = React.useState<string[]>(["knee-right"])
+  const [focusPart, setFocusPart] = React.useState<BodyFocusPart | null>(null)
 
   return (
     <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-center sm:gap-8">
@@ -16,13 +17,19 @@ export default function BodyMapControlledDemo() {
         onViewChange={setView}
         value={value}
         onValueChange={setValue}
+        focusPart={focusPart}
+        onFocusPartChange={setFocusPart}
         multiple={false}
-        disabledRegions={["front-face"]}
+        disabledRegions={["genitals"]}
       />
       <div className="flex w-full max-w-[240px] flex-col gap-3 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-muted-foreground">View</span>
           <span className="font-mono">{view}</span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground">Focus part</span>
+          <span className="font-mono">{String(focusPart)}</span>
         </div>
         <div className="flex flex-col gap-1">
           <span className="text-muted-foreground">Selected ids</span>
@@ -34,7 +41,10 @@ export default function BodyMapControlledDemo() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setView(view === "front" ? "back" : "front")}
+            onClick={() => {
+              setFocusPart(null)
+              setView(view === "back" ? "front" : "back")
+            }}
           >
             Flip view
           </Button>

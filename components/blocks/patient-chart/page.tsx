@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { AllergyList, toPatientAllergies, type Allergy } from "@/components/medicn/allergy-list"
 import { ClinicalTimeline, type TimelineEvent } from "@/components/medicn/clinical-timeline"
+import { EarlyWarningScore } from "@/components/medicn/early-warning-score"
 import { LabResults, type LabPanel } from "@/components/medicn/lab-results"
 import { MedicationForm, toMedication } from "@/components/medicn/medication-form"
 import { MedicationList, type Medication } from "@/components/medicn/medication-list"
@@ -18,7 +19,7 @@ import { PatientHeader, type Patient } from "@/components/medicn/patient-header"
 import { ProblemList, type Problem } from "@/components/medicn/problem-list"
 import { VitalSignsPanel, type VitalReading } from "@/components/medicn/vital-signs"
 import { VitalsChart, type VitalsChartSeries } from "@/components/medicn/vitals-chart"
-import { VitalsForm } from "@/components/medicn/vitals-form"
+import { VitalsForm, type VitalsFormValues } from "@/components/medicn/vitals-form"
 
 // Sample data — replace with your EHR / FHIR queries.
 const TODAY = "2026-10-29"
@@ -241,6 +242,7 @@ export default function PatientChartPage() {
   const [medications, setMedications] = React.useState<Medication[]>(initialMedications)
   const [orderOpen, setOrderOpen] = React.useState(false)
   const [saved, setSaved] = React.useState(false)
+  const [vitalsDraft, setVitalsDraft] = React.useState<VitalsFormValues>({})
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 p-4 lg:p-6">
@@ -335,17 +337,18 @@ export default function PatientChartPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="vitals">
+        <TabsContent value="vitals" className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)]">
           <Card>
             <CardHeader>
               <CardTitle>Record vitals</CardTitle>
               <CardDescription>Entered values are stored in metric units.</CardDescription>
             </CardHeader>
             <CardContent>
-              <VitalsForm onSubmit={() => setSaved(true)} />
+              <VitalsForm onValuesChange={setVitalsDraft} onSubmit={() => setSaved(true)} />
               {saved && <p className="mt-3 text-sm text-clinical-normal-foreground">Vitals saved to chart.</p>}
             </CardContent>
           </Card>
+          <EarlyWarningScore vitals={vitalsDraft} editable hideBreakdown />
         </TabsContent>
 
         <TabsContent value="note">

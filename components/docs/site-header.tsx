@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { Logo } from "@/components/docs/logo"
+import { Logo, Wordmark } from "@/components/docs/logo"
 import { MobileNav } from "@/components/docs/mobile-nav"
 import { ThemeCustomizerPopover } from "@/components/docs/theme-customizer"
 import { ThemeToggle } from "@/components/docs/theme-toggle"
@@ -23,7 +23,7 @@ export function SiteHeader() {
         <MobileNav sections={getDocsNav()} />
         <Link href="/" className="mr-4 flex items-center gap-2 font-semibold tracking-tight">
           <Logo />
-          {siteConfig.name}
+          <Wordmark />
         </Link>
         <nav className="hidden items-center gap-1 text-sm md:flex">
           <Button asChild variant="ghost" size="sm">

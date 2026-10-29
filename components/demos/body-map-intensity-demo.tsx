@@ -5,16 +5,16 @@ import * as React from "react"
 import { BodyMap, getBodyMapHeatColor } from "@/components/medicn/body-map"
 
 const INTENSITY: Record<string, number> = {
-  "front-shoulder-left": 4,
-  "front-upper-arm-left": 2,
-  "front-knee-right": 7,
-  "front-shin-right": 3,
-  "back-neck": 5,
-  "back-upper-back-left": 3,
-  "back-lower-back-left": 9,
-  "back-lower-back-right": 6,
-  "back-buttock-left": 5,
-  "back-thigh-left": 3,
+  "back-of-shoulder-left": 4,
+  "back-of-upper-arm-left": 2,
+  nape: 5,
+  "upper-back-left": 3,
+  "mid-back": 4,
+  "lower-back-left": 9,
+  "lower-back-right": 6,
+  "buttock-left": 5,
+  "back-of-thigh-left": 3,
+  "calf-left": 2,
 }
 
 const LEGEND = [0, 2, 4, 6, 8, 10]

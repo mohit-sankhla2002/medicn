@@ -19,7 +19,7 @@ export function MobileNav({ sections }: { sections: NavSection[] }) {
       </SheetTrigger>
       <SheetContent side="left" className="w-72 overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>medicn</SheetTitle>
+          <SheetTitle>Medicn</SheetTitle>
         </SheetHeader>
         <div className="px-4 pb-8">
           <DocsSidebarNav sections={sections} onNavigate={() => setOpen(false)} />
