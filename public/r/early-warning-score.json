@@ -13,8 +13,8 @@
     "switch",
     "table",
     "toggle-group",
-    "https://medicn.vercel.app/r/clinical-status-badge.json",
-    "https://medicn.vercel.app/r/vitals-form.json"
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+    "https://medicn-ui.vercel.app/r/vitals-form.json"
   ],
   "files": [
     {

@@ -15,8 +15,8 @@
     "select",
     "table",
     "tooltip",
-    "https://medicn.vercel.app/r/clinical-status-badge.json",
-    "https://medicn.vercel.app/r/medication-list.json"
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+    "https://medicn-ui.vercel.app/r/medication-list.json"
   ],
   "files": [
     {

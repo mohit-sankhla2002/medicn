@@ -13,8 +13,8 @@
     "select",
     "textarea",
     "toggle-group",
-    "https://medicn.vercel.app/r/body-map.json",
-    "https://medicn.vercel.app/r/clinical-status-badge.json"
+    "https://medicn-ui.vercel.app/r/body-map.json",
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
   ],
   "files": [
     {
