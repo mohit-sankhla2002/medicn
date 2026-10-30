@@ -13,17 +13,17 @@
     "field",
     "tabs",
     "textarea",
-    "https://medicn.vercel.app/r/allergy-list.json",
-    "https://medicn.vercel.app/r/clinical-timeline.json",
-    "https://medicn.vercel.app/r/early-warning-score.json",
-    "https://medicn.vercel.app/r/lab-results.json",
-    "https://medicn.vercel.app/r/medication-form.json",
-    "https://medicn.vercel.app/r/medication-list.json",
-    "https://medicn.vercel.app/r/patient-header.json",
-    "https://medicn.vercel.app/r/problem-list.json",
-    "https://medicn.vercel.app/r/vital-signs.json",
-    "https://medicn.vercel.app/r/vitals-chart.json",
-    "https://medicn.vercel.app/r/vitals-form.json"
+    "https://medicn-ui.vercel.app/r/allergy-list.json",
+    "https://medicn-ui.vercel.app/r/clinical-timeline.json",
+    "https://medicn-ui.vercel.app/r/early-warning-score.json",
+    "https://medicn-ui.vercel.app/r/lab-results.json",
+    "https://medicn-ui.vercel.app/r/medication-form.json",
+    "https://medicn-ui.vercel.app/r/medication-list.json",
+    "https://medicn-ui.vercel.app/r/patient-header.json",
+    "https://medicn-ui.vercel.app/r/problem-list.json",
+    "https://medicn-ui.vercel.app/r/vital-signs.json",
+    "https://medicn-ui.vercel.app/r/vitals-chart.json",
+    "https://medicn-ui.vercel.app/r/vitals-form.json"
   ],
   "files": [
     {

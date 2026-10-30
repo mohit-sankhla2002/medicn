@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "medicn",
-  "homepage": "https://medicn.vercel.app",
+  "homepage": "https://medicn-ui.vercel.app",
   "items": [
     {
       "name": "appointment-calendar",
@@ -128,7 +128,7 @@
         "clinical-data"
       ],
       "registryDependencies": [
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -228,7 +228,7 @@
         "label",
         "switch",
         "table",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -281,8 +281,8 @@
         "chart",
         "table",
         "toggle-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json",
-        "https://medicn.vercel.app/r/vital-signs.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/vital-signs.json"
       ],
       "files": [
         {
@@ -339,7 +339,7 @@
         "select",
         "switch",
         "textarea",
-        "https://medicn.vercel.app/r/medication-list.json"
+        "https://medicn-ui.vercel.app/r/medication-list.json"
       ],
       "files": [
         {
@@ -390,7 +390,7 @@
         "button",
         "input",
         "toggle-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -451,7 +451,7 @@
         "select",
         "switch",
         "textarea",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -510,7 +510,7 @@
         "select",
         "tabs",
         "textarea",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -655,8 +655,8 @@
         "field",
         "input",
         "toggle-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json",
-        "https://medicn.vercel.app/r/vital-signs.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/vital-signs.json"
       ],
       "files": [
         {
@@ -777,8 +777,8 @@
         "select",
         "textarea",
         "toggle-group",
-        "https://medicn.vercel.app/r/body-map.json",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/body-map.json",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -831,8 +831,8 @@
         "switch",
         "table",
         "toggle-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json",
-        "https://medicn.vercel.app/r/vitals-form.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/vitals-form.json"
       ],
       "files": [
         {
@@ -881,7 +881,7 @@
       "registryDependencies": [
         "button",
         "radio-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -927,7 +927,7 @@
       "registryDependencies": [
         "field",
         "radio-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -948,7 +948,7 @@
         "checkbox",
         "field",
         "radio-group",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -1012,7 +1012,7 @@
       "registryDependencies": [
         "chart",
         "table",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -1071,7 +1071,7 @@
         "select",
         "table",
         "tooltip",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -1126,8 +1126,8 @@
         "select",
         "table",
         "tooltip",
-        "https://medicn.vercel.app/r/clinical-status-badge.json",
-        "https://medicn.vercel.app/r/medication-list.json"
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/medication-list.json"
       ],
       "files": [
         {
@@ -1182,8 +1182,8 @@
         "separator",
         "sidebar",
         "tooltip",
-        "https://medicn.vercel.app/r/appointment-calendar.json",
-        "https://medicn.vercel.app/r/clinical-status-badge.json"
+        "https://medicn-ui.vercel.app/r/appointment-calendar.json",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
       ],
       "files": [
         {
@@ -1211,17 +1211,17 @@
         "field",
         "tabs",
         "textarea",
-        "https://medicn.vercel.app/r/allergy-list.json",
-        "https://medicn.vercel.app/r/clinical-timeline.json",
-        "https://medicn.vercel.app/r/early-warning-score.json",
-        "https://medicn.vercel.app/r/lab-results.json",
-        "https://medicn.vercel.app/r/medication-form.json",
-        "https://medicn.vercel.app/r/medication-list.json",
-        "https://medicn.vercel.app/r/patient-header.json",
-        "https://medicn.vercel.app/r/problem-list.json",
-        "https://medicn.vercel.app/r/vital-signs.json",
-        "https://medicn.vercel.app/r/vitals-chart.json",
-        "https://medicn.vercel.app/r/vitals-form.json"
+        "https://medicn-ui.vercel.app/r/allergy-list.json",
+        "https://medicn-ui.vercel.app/r/clinical-timeline.json",
+        "https://medicn-ui.vercel.app/r/early-warning-score.json",
+        "https://medicn-ui.vercel.app/r/lab-results.json",
+        "https://medicn-ui.vercel.app/r/medication-form.json",
+        "https://medicn-ui.vercel.app/r/medication-list.json",
+        "https://medicn-ui.vercel.app/r/patient-header.json",
+        "https://medicn-ui.vercel.app/r/problem-list.json",
+        "https://medicn-ui.vercel.app/r/vital-signs.json",
+        "https://medicn-ui.vercel.app/r/vitals-chart.json",
+        "https://medicn-ui.vercel.app/r/vitals-form.json"
       ],
       "files": [
         {
@@ -1277,7 +1277,7 @@
         "input",
         "radio-group",
         "textarea",
-        "https://medicn.vercel.app/r/appointment-slot-picker.json"
+        "https://medicn-ui.vercel.app/r/appointment-slot-picker.json"
       ],
       "files": [
         {
@@ -1331,8 +1331,8 @@
         "select",
         "textarea",
         "toggle-group",
-        "https://medicn.vercel.app/r/body-map.json",
-        "https://medicn.vercel.app/r/pain-scale.json"
+        "https://medicn-ui.vercel.app/r/body-map.json",
+        "https://medicn-ui.vercel.app/r/pain-scale.json"
       ],
       "files": [
         {
@@ -1363,8 +1363,8 @@
         "select",
         "switch",
         "textarea",
-        "https://medicn.vercel.app/r/body-map.json",
-        "https://medicn.vercel.app/r/pain-scale.json"
+        "https://medicn-ui.vercel.app/r/body-map.json",
+        "https://medicn-ui.vercel.app/r/pain-scale.json"
       ],
       "files": [
         {

@@ -16,8 +16,8 @@
     "select",
     "switch",
     "textarea",
-    "https://medicn.vercel.app/r/body-map.json",
-    "https://medicn.vercel.app/r/pain-scale.json"
+    "https://medicn-ui.vercel.app/r/body-map.json",
+    "https://medicn-ui.vercel.app/r/pain-scale.json"
   ],
   "files": [
     {
