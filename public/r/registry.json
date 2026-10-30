@@ -1375,6 +1375,628 @@
       ]
     },
     {
+      "name": "bmi-calculator",
+      "type": "registry:component",
+      "title": "BMI Calculator",
+      "description": "Interactive WHO-aligned Body Mass Index calculator with metric and imperial units, instant categorization, and visual gauge.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "label",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/bmi-calculator.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "immunization-record",
+      "type": "registry:component",
+      "title": "Immunization Record",
+      "description": "Vaccination history tracker with series completion progress, lot numbers, administration sites, and upcoming overdue reminders.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/immunization-record.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "clinical-note",
+      "type": "registry:component",
+      "title": "Clinical Note",
+      "description": "Structured medical documentation editor supporting SOAP, H&P, Progress, and Procedure note templates with signing workflow.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "textarea",
+        "label",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/clinical-note.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "order-entry",
+      "type": "registry:component",
+      "title": "Order Entry (CPOE)",
+      "description": "Computerized provider order entry catalog for labs, imaging, referrals, procedures, and nursing orders with shopping basket.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/order-entry.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "consent-form",
+      "type": "registry:component",
+      "title": "Informed Consent Form",
+      "description": "Legal medical consent form with procedural disclosures, risks, alternatives, and dual-mode typed or drawn signature capture.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/consent-form.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "prescription-pad",
+      "type": "registry:component",
+      "title": "Prescription Pad",
+      "description": "Structured e-prescribing pad with patient allergies, sig directions builder, refills, DAW toggle, and DEA controlled substance warnings.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "switch",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/prescription-pad.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "surgical-checklist",
+      "type": "registry:component",
+      "title": "Surgical Safety Checklist",
+      "description": "WHO Safe Surgery Saves Lives 3-phase checklist: Sign In (pre-induction), Time Out (pre-incision), and Sign Out (pre-PACU).",
+      "categories": [
+        "assessments"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "label",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/surgical-checklist.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "discharge-summary",
+      "type": "registry:component",
+      "title": "Discharge Summary",
+      "description": "Comprehensive inpatient transition-of-care summary: hospital course, primary/secondary diagnoses, reconciled discharge meds, and follow-up.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/discharge-summary.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "care-plan",
+      "type": "registry:component",
+      "title": "Interdisciplinary Care Plan",
+      "description": "Goal-oriented care plan modeling clinical problems, measurable target goals, multidisciplinary interventions, and progress tracking.",
+      "categories": [
+        "charting"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "label",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/care-plan.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "triage-assessment",
+      "type": "registry:component",
+      "title": "Emergency Triage Assessment",
+      "description": "Emergency Severity Index (ESI 1-5) clinical triage decision tool with vitals overview, acuity reassessment timers, and bed assignment.",
+      "categories": [
+        "assessments"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "textarea",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/triage-assessment.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "family-history",
+      "type": "registry:component",
+      "title": "Family Medical History",
+      "description": "Pedigree visualization and clinical family history documenting heritable conditions, ages of onset, and deceased relatives.",
+      "categories": [
+        "clinical-data"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/family-history.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "wound-care-tracker",
+      "type": "registry:component",
+      "title": "Wound Care Tracker",
+      "description": "Longitudinal wound healing evaluation recording dimensions (length, width, depth), percentage area reduction, exudate, and dressings.",
+      "categories": [
+        "assessments"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/wound-care-tracker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "emergency-department",
+      "type": "registry:block",
+      "title": "Emergency Department",
+      "description": "Full emergency department tracking board with census KPIs, zone filtering, ESI acuity categorization, and active orders.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/triage-assessment.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/emergency-department/page.tsx",
+          "type": "registry:page",
+          "target": "app/emergency-department/page.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
+      "name": "telehealth-visit",
+      "type": "registry:block",
+      "title": "Telehealth Visit",
+      "description": "Integrated virtual care consultation interface with simulated WebRTC video feed, media controls, SOAP note, e-prescribing, and orders.",
+      "categories": [
+        "blocks"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "tabs",
+        "https://medicn-ui.vercel.app/r/clinical-status-badge.json",
+        "https://medicn-ui.vercel.app/r/clinical-note.json",
+        "https://medicn-ui.vercel.app/r/prescription-pad.json",
+        "https://medicn-ui.vercel.app/r/order-entry.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/telehealth-visit/page.tsx",
+          "type": "registry:page",
+          "target": "app/telehealth-visit/page.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "clinical-normal": "oklch(0.63 0.15 158)",
+          "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+          "clinical-watch": "oklch(0.77 0.16 75)",
+          "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+          "clinical-abnormal": "oklch(0.68 0.19 45)",
+          "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+          "clinical-critical": "oklch(0.6 0.22 27)",
+          "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+          "clinical-info": "oklch(0.64 0.13 235)",
+          "clinical-info-foreground": "oklch(0.48 0.12 240)"
+        },
+        "dark": {
+          "clinical-normal": "oklch(0.7 0.15 162)",
+          "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+          "clinical-watch": "oklch(0.8 0.16 80)",
+          "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+          "clinical-abnormal": "oklch(0.72 0.18 50)",
+          "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+          "clinical-critical": "oklch(0.66 0.21 25)",
+          "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+          "clinical-info": "oklch(0.72 0.13 230)",
+          "clinical-info-foreground": "oklch(0.84 0.08 225)"
+        }
+      }
+    },
+    {
       "name": "theme-teal",
       "type": "registry:theme",
       "title": "Teal theme",
