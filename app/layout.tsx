@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
 
+import { Analytics } from "@vercel/analytics/next"
 import { ThemeCustomizerProvider } from "@/components/docs/theme-customizer"
 import { ThemeProvider } from "@/components/docs/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <TooltipProvider>{children}</TooltipProvider>
           </ThemeCustomizerProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
