@@ -17,7 +17,7 @@
     "select",
     "switch",
     "textarea",
-    "https://medicn.vercel.app/r/medication-list.json"
+    "https://medicn-ui.vercel.app/r/medication-list.json"
   ],
   "files": [
     {

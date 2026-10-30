@@ -7,13 +7,13 @@ Medical UI components and blocks for [shadcn/ui](https://ui.shadcn.com): appoint
 ## Use it
 
 ```bash
-npx shadcn@latest add https://medicn.vercel.app/r/body-map.json
+npx shadcn@latest add https://medicn-ui.vercel.app/r/body-map.json
 ```
 
 Or register the namespace in `components.json` and use short names:
 
 ```json
-{ "registries": { "@medicn": "https://medicn.vercel.app/r/{name}.json" } }
+{ "registries": { "@medicn": "https://medicn-ui.vercel.app/r/{name}.json" } }
 ```
 
 ```bash

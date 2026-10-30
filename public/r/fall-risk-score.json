@@ -7,7 +7,7 @@
     "checkbox",
     "field",
     "radio-group",
-    "https://medicn.vercel.app/r/clinical-status-badge.json"
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
   ],
   "files": [
     {

@@ -15,7 +15,7 @@
     "input",
     "radio-group",
     "textarea",
-    "https://medicn.vercel.app/r/appointment-slot-picker.json"
+    "https://medicn-ui.vercel.app/r/appointment-slot-picker.json"
   ],
   "files": [
     {

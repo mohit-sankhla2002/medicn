@@ -4,7 +4,7 @@
   "title": "Vital Signs",
   "description": "Vital sign cards with reference ranges, automatic status classification and trend sparklines.",
   "registryDependencies": [
-    "https://medicn.vercel.app/r/clinical-status-badge.json"
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
   ],
   "files": [
     {
