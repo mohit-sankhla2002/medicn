@@ -6,6 +6,8 @@ import PatientChartBlock from "@/components/blocks/patient-chart/page"
 import AppointmentBookingBlock from "@/components/blocks/appointment-booking/page"
 import SymptomReportBlock from "@/components/blocks/symptom-report/page"
 import PatientIntakeBlock from "@/components/blocks/patient-intake/page"
+import EmergencyDepartmentBlock from "@/components/blocks/emergency-department/page"
+import TelehealthVisitBlock from "@/components/blocks/telehealth-visit/page"
 
 export const blocks: Record<string, React.ComponentType> = {
   "clinic-dashboard": ClinicDashboardBlock,
@@ -13,4 +15,6 @@ export const blocks: Record<string, React.ComponentType> = {
   "appointment-booking": AppointmentBookingBlock,
   "symptom-report": SymptomReportBlock,
   "patient-intake": PatientIntakeBlock,
+  "emergency-department": EmergencyDepartmentBlock,
+  "telehealth-visit": TelehealthVisitBlock,
 }

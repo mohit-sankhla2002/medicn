@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "immunization-record",
+  "title": "Immunization Record",
+  "description": "Vaccination history tracker with series completion progress, lot numbers, administration sites, and upcoming overdue reminders.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://medicn-ui.vercel.app/r/clinical-status-badge.json"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/immunization-record.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { AlertCircle, Calendar, CheckCircle2, Clock, Plus, ShieldCheck, Syringe } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Button } from \"@/components/ui/button\"\nimport { ClinicalStatusBadge } from \"@/components/medicn/clinical-status-badge\"\n\nexport type ImmunizationStatus = \"completed\" | \"not-done\" | \"entered-in-error\"\n\nexport interface Immunization {\n  id: string\n  vaccineName: string\n  vaccineCode?: string\n  status: ImmunizationStatus\n  doseNumber?: number\n  seriesDoses?: number\n  date?: string\n  site?: string\n  route?: string\n  lotNumber?: string\n  expirationDate?: string\n  manufacturer?: string\n  performer?: string\n  note?: string\n}\n\nexport interface ImmunizationDue {\n  vaccineName: string\n  vaccineCode?: string\n  dueDate: string\n  overdue?: boolean\n  seriesInfo?: string\n}\n\nexport function sortImmunizations(records: Immunization[]): Immunization[] {\n  return [...records].sort((a, b) => {\n    const dateA = a.date ? new Date(a.date).getTime() : 0\n    const dateB = b.date ? new Date(b.date).getTime() : 0\n    return dateB - dateA\n  })\n}\n\nexport function getSeriesProgress(\n  records: Immunization[],\n  vaccineName: string\n): { given: number; total?: number } {\n  const matching = records.filter(\n    (r) => r.vaccineName.toLowerCase() === vaccineName.toLowerCase() && r.status === \"completed\"\n  )\n  const maxSeries = matching.find((r) => r.seriesDoses != null)?.seriesDoses\n  return {\n    given: matching.length,\n    total: maxSeries,\n  }\n}\n\nexport function isImmunizationOverdue(dueDate: string | Date, now?: string | Date): boolean {\n  const due = new Date(dueDate).getTime()\n  const current = now ? new Date(now).getTime() : Date.now()\n  return due < current\n}\n\nexport interface ImmunizationRecordProps extends Omit<React.ComponentProps<\"div\">, \"title\"> {\n  immunizations: Immunization[]\n  dueVaccines?: ImmunizationDue[]\n  onRecord?: () => void\n  readOnly?: boolean\n  title?: React.ReactNode\n  emptyMessage?: React.ReactNode\n}\n\nexport function ImmunizationRecord({\n  immunizations,\n  dueVaccines,\n  onRecord,\n  readOnly = false,\n  title = \"Immunization Record\",\n  emptyMessage = \"No immunization records found.\",\n  className,\n  ...props\n}: ImmunizationRecordProps) {\n  const sorted = React.useMemo(() => sortImmunizations(immunizations), [immunizations])\n  const completedCount = immunizations.filter((i) => i.status === \"completed\").length\n\n  return (\n    <div\n      data-slot=\"immunization-record\"\n      className={cn(\"overflow-hidden rounded-xl border bg-card text-card-foreground\", className)}\n      {...props}\n    >\n      <div className=\"flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3\">\n        <div className=\"flex items-center gap-2\">\n          <Syringe className=\"size-4 text-primary\" />\n          <h3 className=\"text-sm font-semibold\">{title}</h3>\n          {immunizations.length > 0 && (\n            <span className=\"text-xs text-muted-foreground\">\n              {completedCount} administered\n            </span>\n          )}\n        </div>\n        {!readOnly && (\n          <Button size=\"sm\" variant=\"outline\" className=\"h-7 text-xs\" onClick={onRecord}>\n            <Plus className=\"mr-1 size-3.5\" />\n            Record vaccine\n          </Button>\n        )}\n      </div>\n\n      {dueVaccines && dueVaccines.length > 0 && (\n        <div className=\"border-b bg-muted/30 px-4 py-3\">\n          <div className=\"mb-2 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider\">\n            <Clock className=\"size-3.5\" />\n            Upcoming & Due\n          </div>\n          <div className=\"grid gap-2 sm:grid-cols-2\">\n            {dueVaccines.map((due, idx) => {\n              const overdue = due.overdue ?? isImmunizationOverdue(due.dueDate)\n              return (\n                <div\n                  key={idx}\n                  className={cn(\n                    \"flex items-start justify-between rounded-lg border p-2.5 text-xs transition-colors\",\n                    overdue\n                      ? \"border-clinical-abnormal/30 bg-clinical-abnormal/5\"\n                      : \"border-border bg-card\"\n                  )}\n                >\n                  <div className=\"space-y-0.5\">\n                    <span className=\"font-medium text-foreground\">{due.vaccineName}</span>\n                    {due.seriesInfo && (\n                      <p className=\"text-[11px] text-muted-foreground\">{due.seriesInfo}</p>\n                    )}\n                    <p className=\"text-[11px] text-muted-foreground\">Due: {due.dueDate}</p>\n                  </div>\n                  <ClinicalStatusBadge\n                    status={overdue ? \"abnormal\" : \"watch\"}\n                    dot={overdue}\n                    className=\"text-[10px]\"\n                  >\n                    {overdue ? \"Overdue\" : \"Due\"}\n                  </ClinicalStatusBadge>\n                </div>\n              )\n            })}\n          </div>\n        </div>\n      )}\n\n      {sorted.length === 0 ? (\n        <div className=\"flex flex-col items-center justify-center p-8 text-center text-sm text-muted-foreground\">\n          <ShieldCheck className=\"mb-2 size-6 opacity-40\" />\n          {emptyMessage}\n        </div>\n      ) : (\n        <ul role=\"list\" className=\"divide-y divide-border\">\n          {sorted.map((item) => {\n            const hasSeries = item.doseNumber != null\n            return (\n              <li key={item.id} className=\"flex items-start gap-3 p-4 hover:bg-muted/20\">\n                <div className=\"mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary\">\n                  <Syringe className=\"size-4\" />\n                </div>\n                <div className=\"flex min-w-0 flex-1 flex-col gap-1\">\n                  <div className=\"flex flex-wrap items-center gap-x-2 gap-y-1\">\n                    <span className=\"font-medium text-foreground\">{item.vaccineName}</span>\n                    {hasSeries && (\n                      <span className=\"rounded border px-1.5 py-0.2 text-[10px] font-semibold text-muted-foreground uppercase\">\n                        Dose {item.doseNumber}\n                        {item.seriesDoses ? ` of ${item.seriesDoses}` : \"\"}\n                      </span>\n                    )}\n                    {item.vaccineCode && (\n                      <span className=\"font-mono text-[10px] text-muted-foreground\">\n                        CVX {item.vaccineCode}\n                      </span>\n                    )}\n                  </div>\n                  <div className=\"flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground\">\n                    {item.date && (\n                      <span className=\"inline-flex items-center gap-1 font-medium text-foreground/80\">\n                        <Calendar className=\"size-3\" />\n                        {item.date}\n                      </span>\n                    )}\n                    {item.site && <span>Site: {item.site}</span>}\n                    {item.lotNumber && (\n                      <span>\n                        Lot: <span className=\"font-mono\">{item.lotNumber}</span>\n                      </span>\n                    )}\n                    {item.performer && <span>Administered by: {item.performer}</span>}\n                  </div>\n                  {item.note && (\n                    <p className=\"mt-0.5 text-xs text-muted-foreground italic\">{item.note}</p>\n                  )}\n                </div>\n                <div className=\"shrink-0\">\n                  <ClinicalStatusBadge\n                    status={item.status === \"completed\" ? \"normal\" : \"watch\"}\n                    dot={false}\n                  >\n                    {item.status === \"completed\" ? \"Completed\" : \"Not Done\"}\n                  </ClinicalStatusBadge>\n                </div>\n              </li>\n            )\n          })}\n        </ul>\n      )}\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "clinical-normal": "oklch(0.63 0.15 158)",
+      "clinical-normal-foreground": "oklch(0.45 0.1 162)",
+      "clinical-watch": "oklch(0.77 0.16 75)",
+      "clinical-watch-foreground": "oklch(0.48 0.11 60)",
+      "clinical-abnormal": "oklch(0.68 0.19 45)",
+      "clinical-abnormal-foreground": "oklch(0.52 0.16 40)",
+      "clinical-critical": "oklch(0.6 0.22 27)",
+      "clinical-critical-foreground": "oklch(0.5 0.19 27)",
+      "clinical-info": "oklch(0.64 0.13 235)",
+      "clinical-info-foreground": "oklch(0.48 0.12 240)"
+    },
+    "dark": {
+      "clinical-normal": "oklch(0.7 0.15 162)",
+      "clinical-normal-foreground": "oklch(0.85 0.12 163)",
+      "clinical-watch": "oklch(0.8 0.16 80)",
+      "clinical-watch-foreground": "oklch(0.88 0.13 85)",
+      "clinical-abnormal": "oklch(0.72 0.18 50)",
+      "clinical-abnormal-foreground": "oklch(0.84 0.11 55)",
+      "clinical-critical": "oklch(0.66 0.21 25)",
+      "clinical-critical-foreground": "oklch(0.81 0.11 20)",
+      "clinical-info": "oklch(0.72 0.13 230)",
+      "clinical-info-foreground": "oklch(0.84 0.08 225)"
+    }
+  },
+  "categories": [
+    "clinical-data"
+  ],
+  "type": "registry:component"
+}
