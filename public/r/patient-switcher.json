@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "patient-switcher",
+  "title": "Patient Switcher",
+  "description": "Patient and caregiver account selection with explicit identity, relationship and host-supplied access scope.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "label",
+    "https://medicn-ui.vercel.app/r/workflow-state.json"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/patient-switcher.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Users } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Label } from \"@/components/ui/label\"\nimport { WorkflowState } from \"@/components/medicn/workflow-state\"\n\nexport interface PatientProfile {\n  id: string\n  name: string\n  /** Pre-formatted relationship, e.g. \"You\", \"Child\", \"Parent\". */\n  relationship: string\n  /** A disambiguator such as a masked identifier or date of birth. */\n  detail?: string\n  /** Host-supplied scope, e.g. \"Appointments and messages only\". */\n  accessLabel?: string\n  disabled?: boolean\n}\n\nexport interface PatientSwitcherProps extends Omit<React.ComponentProps<\"div\">, \"onChange\" | \"children\"> {\n  patients: PatientProfile[]\n  value?: string\n  defaultValue?: string\n  onPatientChange?: (patient: PatientProfile) => void\n  disabled?: boolean\n  isLoading?: boolean\n  error?: React.ReactNode\n  onRetry?: () => void\n  labels?: Partial<Record<\"label\" | \"placeholder\" | \"viewing\" | \"empty\" | \"loading\" | \"error\" | \"retry\", string>>\n}\n\n/** Identity selection only. Supply authorized profiles and enforce access on the server. */\nexport function PatientSwitcher({ patients, value, defaultValue = \"\", onPatientChange, disabled, isLoading, error, onRetry, labels, className, ...props }: PatientSwitcherProps) {\n  const id = React.useId()\n  const [internalValue, setInternalValue] = React.useState(defaultValue)\n  const availablePatients = isLoading || error ? [] : patients\n  const selected = availablePatients.find((patient) => patient.id === (value ?? internalValue) && !patient.disabled)\n  const text = { label: \"Care account\", placeholder: \"Choose a patient\", viewing: \"Viewing care for\", empty: \"No care accounts available\", loading: \"Loading care accounts…\", error: \"Could not load care accounts\", retry: \"Try again\", ...labels }\n\n  return (\n    <div data-slot=\"patient-switcher\" aria-busy={isLoading || undefined} className={cn(\"w-full rounded-xl border bg-card p-4 text-card-foreground\", className)} {...props}>\n      <Label htmlFor={id} className=\"mb-2 flex items-center gap-2\"><Users aria-hidden className=\"size-4 text-muted-foreground\" />{text.label}</Label>\n      <select\n        id={id}\n        value={selected?.id ?? \"\"}\n        disabled={disabled || isLoading || Boolean(error) || patients.length === 0}\n        aria-describedby={selected ? `${id}-context` : undefined}\n        className=\"h-10 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50\"\n        onChange={(event) => {\n          const patient = patients.find((item) => item.id === event.target.value && !item.disabled)\n          if (!patient) return\n          if (value === undefined) setInternalValue(patient.id)\n          onPatientChange?.(patient)\n        }}\n      >\n        <option value=\"\" disabled>{text.placeholder}</option>\n        {availablePatients.map((patient) => <option key={patient.id} value={patient.id} disabled={patient.disabled}>{patient.name} · {patient.relationship}{patient.detail ? ` · ${patient.detail}` : \"\"}</option>)}\n      </select>\n      {isLoading ? <WorkflowState state=\"loading\" title={text.loading} className=\"py-4\" /> : error ? <WorkflowState state=\"error\" title={text.error} description={error} onRetry={onRetry} retryLabel={text.retry} className=\"py-4\" /> : patients.length === 0 ? <WorkflowState state=\"empty\" title={text.empty} className=\"py-4\" /> : selected ? (\n        <div id={`${id}-context`} role=\"status\" className=\"mt-3 rounded-lg bg-muted/50 px-3 py-2 text-sm\">\n          <p><span className=\"text-muted-foreground\">{text.viewing} </span><span className=\"font-medium\">{selected.name}</span></p>\n          {selected.accessLabel && <p className=\"mt-1 text-xs text-muted-foreground\">{selected.accessLabel}</p>}\n        </div>\n      ) : null}\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "patient"
+  ],
+  "type": "registry:component"
+}

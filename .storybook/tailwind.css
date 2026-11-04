@@ -1,4 +1,10 @@
-@import "tailwindcss";
+@import "../app/globals.css";
 @import "../packages/ui/src/styles/tokens.css";
 
 @source "../packages/ui/src";
+@source "../components";
+
+:root {
+  --font-geist: ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: ui-monospace, monospace;
+}

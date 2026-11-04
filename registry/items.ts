@@ -8,6 +8,7 @@
  */
 
 export type RegistryCategory =
+  | "Foundations"
   | "Scheduling"
   | "Anatomy"
   | "Forms"
@@ -15,6 +16,7 @@ export type RegistryCategory =
   | "Charting"
   | "Clinical data"
   | "Patient"
+  | "Practice management"
   | "Blocks"
 
 export interface PropDoc {
@@ -53,7 +55,221 @@ const component = (name: string): RegistryFile => ({
   type: "registry:component",
 })
 
+const workflowFeedbackProps: PropDoc[] = [
+  { name: "isLoading", type: "boolean", description: "Replace data with an accessible loading state. Existing data is not shown while loading." },
+  { name: "error", type: "ReactNode", description: "Replace data with an error and optional retry action." },
+  { name: "onRetry", type: "() => void", description: "Request another fetch from the host application." },
+  { name: "labels", type: "Partial<Record<LabelKey, string>>", description: "Override built-in interface text for your language or workflow; see the exported props type for keys." },
+]
+
 export const registryItems: RegistryEntry[] = [
+  {
+    name: "workflow-state", title: "Workflow State",
+    description: "Accessible loading, empty and error feedback with a host-controlled retry action.",
+    type: "registry:component", category: "Foundations", files: [component("workflow-state")],
+    dependencies: ["lucide-react"], registryDependencies: ["button"],
+    demos: [{ name: "workflow-state-demo", title: "Recover from an error" }],
+    usage: `import { WorkflowState } from "@/components/medicn/workflow-state"
+
+<WorkflowState state="error" title="Could not load records" onRetry={refetch} />`,
+    api: [{ component: "WorkflowState", props: [
+      { name: "state", type: '"loading" | "empty" | "error"', description: "Feedback state. Errors use role=alert; loading and empty feedback use role=status." },
+      { name: "title / description", type: "ReactNode", description: "Primary message and optional supporting content." },
+      { name: "onRetry / retryLabel", type: "(() => void) / string", description: "Optional error retry action and its label." },
+    ] }],
+    references: [{ label: "NHS error summary", href: "https://service-manual.nhs.uk/design-system/components/error-summary", description: "Make errors explicit and provide a recovery path." }],
+  },
+  {
+    name: "patient-switcher", title: "Patient Switcher",
+    description: "Patient and caregiver account selection with explicit identity, relationship and host-supplied access scope.",
+    type: "registry:component", category: "Patient", files: [component("patient-switcher")],
+    dependencies: ["lucide-react"], registryDependencies: ["label", "medicn:workflow-state"],
+    demos: [{ name: "patient-switcher-demo", title: "Family care accounts" }],
+    usage: `import { PatientSwitcher } from "@/components/medicn/patient-switcher"
+
+<PatientSwitcher
+  patients={authorizedProfiles}
+  value={patientId}
+  onPatientChange={(patient) => setPatientId(patient.id)}
+/>`,
+    notes: [
+      "Supply only profiles the current user is authorized to view. The switcher does not grant proxy access or enforce permissions.",
+      "No profile is selected automatically. Use value for controlled selection or defaultValue for initial selection. An unavailable selection is cleared visually rather than replaced with another identity.",
+      "On account changes, the host must scope and refresh dependent queries, drafts and actions to the selected patient. Never reuse another patient's cached content while loading.",
+      "Profile fields: id, name, relationship, optional detail, accessLabel and disabled. Detail can distinguish people with the same name.",
+    ],
+    api: [{ component: "PatientSwitcher", props: [
+      { name: "patients", type: "PatientProfile[]", description: "Authorized profiles. Each requires id, name and relationship." },
+      { name: "value / defaultValue", type: "string", description: "Controlled or initial patient ID." },
+      { name: "onPatientChange", type: "(patient: PatientProfile) => void", description: "Request a patient-context change. Controlled value changes only when the host updates it." },
+      { name: "disabled", type: "boolean", description: "Disable account changes." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [{ label: "MyChart proxy access", href: "https://www.mychart.org/l/en-us/help/proxy/", description: "Visible account identity and switching between self and family care." }],
+  },
+  {
+    name: "patient-task-list", title: "Patient Task List",
+    description: "Actionable patient checklists for pre-visit preparation, intake, follow-up and care-plan tasks.",
+    type: "registry:component", category: "Patient", files: [component("patient-task-list")],
+    dependencies: ["lucide-react"], registryDependencies: ["badge", "button", "medicn:workflow-state"],
+    demos: [{ name: "patient-task-list-demo", title: "Pre-visit preparation", description: "Open a task, complete its form, and return to updated progress." }],
+    usage: `import { PatientTaskList } from "@/components/medicn/patient-task-list"
+
+<PatientTaskList tasks={tasks} onTaskAction={(task) => openTask(task.id)} />`,
+    notes: [
+      "Task states are not-started, in-progress, completed and blocked. Each task requires id, title and status; optional description, due, required, blockedReason and actionLabel customize its presentation.",
+      "Clicking Start or Continue requests navigation; it never marks a task completed. Update tasks after the underlying workflow is saved successfully.",
+      "Deadlines are pre-formatted display strings. The host owns scheduling, overdue calculations and notifications.",
+      "renderActions replaces default actions; custom actions must honor disabled and blocked states themselves.",
+    ],
+    api: [{ component: "PatientTaskList", props: [
+      { name: "tasks", type: "PatientTask[]", description: "Authoritative task data, displayed in supplied order." },
+      { name: "title / description", type: "ReactNode", description: "Checklist heading and optional context." },
+      { name: "onTaskAction", type: "(task: PatientTask) => void", description: "Open, continue or review a task. Blocked tasks cannot invoke the default action." },
+      { name: "renderActions", type: "(task: PatientTask) => ReactNode", description: "Replace default buttons with links or custom controls." },
+      { name: "disabled", type: "boolean", description: "Disable built-in task actions." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [
+      { label: "NHS task list", href: "https://service-manual.nhs.uk/design-system/components/task-list", description: "Help people complete longer services across multiple steps." },
+      { label: "Healthie care plans", href: "https://help.gethealthie.com/article/371-care-plans", description: "Patient-visible goals, recommendations and care resources." },
+    ],
+  },
+  {
+    name: "appointment-waitlist", title: "Appointment Waitlist",
+    description: "Patient or staff waitlist views with appointment preferences, slot offers, expiry details and booking actions.",
+    type: "registry:component", category: "Scheduling", files: [component("appointment-waitlist")],
+    dependencies: ["lucide-react"], registryDependencies: ["badge", "button", "medicn:workflow-state"],
+    demos: [{ name: "appointment-waitlist-demo", title: "Recover appointment openings", description: "Offer a demo slot, book it or cancel the request." }],
+    usage: `import { AppointmentWaitlist } from "@/components/medicn/appointment-waitlist"
+
+// Patient view: omit onOffer; the host validates availability when booking.
+<AppointmentWaitlist entries={requests} onBook={bookOfferedSlot} onCancel={cancelRequest} />`,
+    notes: [
+      "Entries require id, patientName, service, preferences and status. Optional provider, requestedAt, offeredSlot, offerExpiresAt and note are display-ready strings.",
+      "Statuses: waiting, offered, booked, expired and cancelled. The host validates eligibility, expiry and availability, performs bookings atomically and updates entries after success.",
+      "The Book action requires an offered status and offeredSlot. Expired, booked and cancelled entries have no built-in actions.",
+      "Callbacks expose role-appropriate actions; they do not enforce authorization. Notification delivery and slot reservation remain with your application.",
+      "The demo uses fixed illustrative slots and local state; it is not an availability or booking service. renderActions replaces built-in controls and owns their disabled behavior.",
+    ],
+    api: [{ component: "AppointmentWaitlist", props: [
+      { name: "entries", type: "WaitlistEntry[]", description: "Host-owned requests and offers, in supplied order." },
+      { name: "title / description", type: "ReactNode", description: "Heading and optional workflow context." },
+      { name: "onOffer / onBook / onCancel", type: "(entry: WaitlistEntry) => void", description: "Request an offer, accept an offer, or cancel a request. No status is mutated internally." },
+      { name: "pendingId / disabled", type: "string / boolean", description: "Disable one entry's built-in actions or all built-in actions." },
+      { name: "renderActions", type: "(entry: WaitlistEntry) => ReactNode", description: "Replace default actions for a custom workflow." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [{ label: "Jane waitlist notifications", href: "https://jane.app/guide/using-wait-list-notifications", description: "Match requests to openings and expose explicit offer and booking states." }],
+  },
+  {
+    name: "patient-worklist", title: "Patient Worklist",
+    description: "Reusable practice worklist with patient search, visit-status filters, room and provider context, and custom row actions.",
+    type: "registry:component", category: "Practice management", files: [component("patient-worklist")],
+    dependencies: ["lucide-react"], registryDependencies: ["badge", "button", "input", "label", "table", "medicn:workflow-state"],
+    demos: [{ name: "patient-worklist-demo", title: "Front desk and rooming", description: "Search, filter, inspect a patient and assign a demo room." }],
+    usage: `import { PatientWorklist } from "@/components/medicn/patient-worklist"
+
+<PatientWorklist
+  patients={visits}
+  search={search}
+  onSearchChange={setSearch}
+  status={status}
+  onStatusChange={setStatus}
+  onPatientSelect={(visit) => openChart(visit.patientId)}
+/>`,
+    notes: [
+      "Each row requires an encounter/work-item id, patientId, name and status. Optional identifier, appointmentTime, reason, provider, location, priority and waitingTime supply display context.",
+      "Local search covers names, identifiers, reasons, providers and locations. Controlled search/status can be persisted in a URL or saved view. Set manualFiltering for server-filtered rows; pagination remains the host's responsibility.",
+      "Statuses: scheduled, arrived, roomed, in-progress, completed and cancelled. Priority and elapsed wait time are supplied by the host, not clinically inferred.",
+      "Row actions are render slots; the worklist does not transition encounters or assign rooms itself. It uses a horizontally scrollable semantic table on small screens.",
+    ],
+    api: [{ component: "PatientWorklist", props: [
+      { name: "patients", type: "WorklistPatient[]", description: "Encounter rows in the host's preferred order." },
+      { name: "title", type: "ReactNode", default: '"Patient worklist"', description: "Worklist heading." },
+      { name: "search / defaultSearch / onSearchChange", type: "string / string / ((search: string) => void)", description: "Controlled or initial search and its callback." },
+      { name: "status / defaultStatus / onStatusChange", type: 'WorklistStatus | "all" / WorklistStatus | "all" / callback', description: "Controlled or initial status filter and its callback." },
+      { name: "manualFiltering", type: "boolean", default: "false", description: "Show supplied rows without local filtering; still emit filter changes." },
+      { name: "onPatientSelect", type: "(patient: WorklistPatient) => void", description: "Open a chart or contextual preview using the patient's name button." },
+      { name: "renderActions", type: "(patient: WorklistPatient) => ReactNode", description: "Host-owned row actions such as rooming or encounter completion." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [
+      { label: "OpenMRS service queues", href: "https://o3-docs.openmrs.org/en-US/docs/configure-o3/configure-service-queues/", description: "Configurable service worklists and patient status context." },
+      { label: "Linear custom views", href: "https://linear.app/docs/custom-views", description: "Reusable filtered worklists that can be saved and shared by the host." },
+    ],
+  },
+  {
+    name: "patient-message-thread", title: "Patient Message Thread",
+    description: "Patient and care-team conversations with attachments, delivery states, controlled drafts and failure-safe async sending.",
+    type: "registry:component", category: "Patient", files: [component("patient-message-thread")],
+    dependencies: ["lucide-react"], registryDependencies: ["button", "label", "textarea", "medicn:workflow-state"],
+    demos: [{ name: "patient-message-thread-demo", title: "Patient and care-team conversation" }],
+    usage: `import { PatientMessageThread } from "@/components/medicn/patient-message-thread"
+
+<PatientMessageThread
+  conversationId={thread.id}
+  messages={messages}
+  currentUserId={viewer.id}
+  onSend={async (body) => {
+    await saveMessage(body)
+    await refreshMessages()
+  }}
+/>`,
+    notes: [
+      "Use the same component for patients and staff by changing currentUserId. Supply a stable conversationId: changing conversation or viewer resets local drafts and prevents a late send completion from clearing a new thread's draft. Supply messages oldest first. Each requires id, authorId, authorName, body and a display-ready sentAt timestamp; authorRole, status and attachments are optional.",
+      "onSend must resolve only after saving succeeds. Rejections preserve the draft and show a retryable error. Pending submissions are locked against duplicates. No sent/read receipt or new message is fabricated by the component.",
+      "Omit onSend for a read-only history. value/defaultValue/onValueChange support external draft storage; Ctrl/Cmd+Enter sends, while Enter inserts a newline.",
+      "Attachment objects contain id, name and optional detail. onAttachmentOpen receives an attachment and its message; authorization and file retrieval stay in your application. No uploads are performed.",
+      "Provide your own response-time or urgent-contact notice. Drafts are held in memory unless your app persists them. Scope stored drafts to both the viewer and the patient.",
+    ],
+    api: [{ component: "PatientMessageThread", props: [
+      { name: "messages / currentUserId", type: "PatientMessage[] / string", description: "Conversation data and the viewer used to align outgoing messages." },
+      { name: "conversationId", type: "string", description: "Stable conversation identity. Changing conversationId or currentUserId resets local composer state; the host must also scope controlled drafts and async callbacks to that conversation." },
+      { name: "title / description / notice", type: "ReactNode", description: "Heading, optional context and clinic-specific communication notice." },
+      { name: "value / defaultValue / onValueChange", type: "string / string / ((draft: string) => void)", description: "Controlled or initial draft and edit callback." },
+      { name: "onSend", type: "(body: string) => void | Promise<void>", description: "Persist a trimmed message. Reject to retain the draft." },
+      { name: "onAttachmentOpen", type: "(attachment: MessageAttachment, message: PatientMessage) => void", description: "Open an authorized attachment using the host's file service." },
+      { name: "onRetryMessage", type: "(message: PatientMessage) => void", description: "Retry an outgoing message marked failed by the host." },
+      { name: "disabled / maxLength", type: "boolean / number", description: "Disable composing/sending; maximum draft length defaults to 4000." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [{ label: "MyChart messaging", href: "https://www.mychart.org/l/en-us/explore/", description: "Patient–care-team conversations with message attachments and refill requests." }],
+  },
+  {
+    name: "billing-summary", title: "Billing Summary",
+    description: "Patient or staff statements with currency-aware amounts, authoritative adjustments, payment entry points and downloads.",
+    type: "registry:component", category: "Practice management", files: [component("billing-summary")],
+    dependencies: ["lucide-react"], registryDependencies: ["badge", "button", "medicn:workflow-state"],
+    demos: [{ name: "billing-summary-demo", title: "Patient statement", description: "INR statement with an existing payment and a downloadable text summary. Checkout is a preview only." }],
+    usage: `import { BillingSummary } from "@/components/medicn/billing-summary"
+
+<BillingSummary
+  statement={statement}
+  locale="en-IN"
+  pending={openingCheckout}
+  onPay={(invoice) => openCheckout(invoice.id)}
+  onDownload={(invoice) => downloadStatement(invoice.id)}
+/>`,
+    notes: [
+      "All amounts are integer minor units for the statement's currency. For example 150000 INR is ₹1,500; JPY has zero decimal places and KWD has three. formatAmount can replace Intl formatting.",
+      "The host supplies statement items, totals, balance and status. Totals are never reconstructed from incomplete line items or guessed insurance coverage. Use draft/due/partially-paid/paid/overdue/void as supplied by your billing system.",
+      "Payment is offered only for positive balances with due, partially-paid or overdue status and an onPay callback. Actions do not mark bills paid; update data from your payment service after confirmation.",
+      "Statements require id, patientName, currency, status, items and balanceMinor. Items require id, description and amountMinor, with optional detail. Optional totals contain label/amountMinor pairs; issuedAt and dueAt are display strings.",
+    ],
+    api: [{ component: "BillingSummary", props: [
+      { name: "statement", type: "BillingStatement", description: "Authoritative statement. Omit for an empty state." },
+      { name: "title / note", type: "ReactNode", description: "Heading and optional billing context." },
+      { name: "locale / formatAmount", type: "string / ((amountMinor: number, currency: string) => string)", description: "Intl locale (default en-US), or a custom amount formatter." },
+      { name: "onPay / onDownload", type: "(statement: BillingStatement) => void", description: "Open host checkout or request a statement download." },
+      { name: "pending", type: "boolean", description: "Disable statement actions while a request is pending." },
+      ...workflowFeedbackProps,
+    ] }],
+    references: [
+      { label: "MyChart billing and insurance", href: "https://www.mychart.org/l/en-us/explore/", description: "Patient access to charges, payments and coverage information." },
+      { label: "Healthie billing integration", href: "https://help.gethealthie.com/article/1240-healthie-and-claimmd-integration", description: "Keep financial state tied to actual billing-service responses." },
+    ],
+  },
   // ───────────────────────────── Scheduling ─────────────────────────────
   {
     name: "appointment-calendar",
@@ -2444,6 +2660,7 @@ export function getRegistryItem(name: string) {
 }
 
 export const categoryOrder: RegistryCategory[] = [
+  "Foundations",
   "Scheduling",
   "Anatomy",
   "Forms",
@@ -2451,5 +2668,6 @@ export const categoryOrder: RegistryCategory[] = [
   "Charting",
   "Clinical data",
   "Patient",
+  "Practice management",
   "Blocks",
 ]

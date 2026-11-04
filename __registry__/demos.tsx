@@ -7,6 +7,8 @@ import AppointmentCalendarDayDemo from "@/components/demos/appointment-calendar-
 import AppointmentCalendarDemo from "@/components/demos/appointment-calendar-demo"
 import AppointmentCalendarMonthDemo from "@/components/demos/appointment-calendar-month-demo"
 import AppointmentSlotPickerDemo from "@/components/demos/appointment-slot-picker-demo"
+import AppointmentWaitlistDemo from "@/components/demos/appointment-waitlist-demo"
+import BillingSummaryDemo from "@/components/demos/billing-summary-demo"
 import BmiCalculatorDemo from "@/components/demos/bmi-calculator-demo"
 import BodyMapControlledDemo from "@/components/demos/body-map-controlled-demo"
 import BodyMapDemo from "@/components/demos/body-map-demo"
@@ -50,6 +52,10 @@ import PainScaleDemo from "@/components/demos/pain-scale-demo"
 import PainScaleSizesDemo from "@/components/demos/pain-scale-sizes-demo"
 import PatientHeaderCompactDemo from "@/components/demos/patient-header-compact-demo"
 import PatientHeaderDemo from "@/components/demos/patient-header-demo"
+import PatientMessageThreadDemo from "@/components/demos/patient-message-thread-demo"
+import PatientSwitcherDemo from "@/components/demos/patient-switcher-demo"
+import PatientTaskListDemo from "@/components/demos/patient-task-list-demo"
+import PatientWorklistDemo from "@/components/demos/patient-worklist-demo"
 import PrescriptionPadDemo from "@/components/demos/prescription-pad-demo"
 import ProblemListDemo from "@/components/demos/problem-list-demo"
 import ProblemListReadonlyDemo from "@/components/demos/problem-list-readonly-demo"
@@ -63,6 +69,7 @@ import VitalSignsDemo from "@/components/demos/vital-signs-demo"
 import VitalsChartDemo from "@/components/demos/vitals-chart-demo"
 import VitalsChartSingleDemo from "@/components/demos/vitals-chart-single-demo"
 import VitalsFormDemo from "@/components/demos/vitals-form-demo"
+import WorkflowStateDemo from "@/components/demos/workflow-state-demo"
 import WoundCareTrackerDemo from "@/components/demos/wound-care-tracker-demo"
 
 export const demos: Record<string, React.ComponentType> = {
@@ -72,6 +79,8 @@ export const demos: Record<string, React.ComponentType> = {
   "appointment-calendar-demo": AppointmentCalendarDemo,
   "appointment-calendar-month-demo": AppointmentCalendarMonthDemo,
   "appointment-slot-picker-demo": AppointmentSlotPickerDemo,
+  "appointment-waitlist-demo": AppointmentWaitlistDemo,
+  "billing-summary-demo": BillingSummaryDemo,
   "bmi-calculator-demo": BmiCalculatorDemo,
   "body-map-controlled-demo": BodyMapControlledDemo,
   "body-map-demo": BodyMapDemo,
@@ -115,6 +124,10 @@ export const demos: Record<string, React.ComponentType> = {
   "pain-scale-sizes-demo": PainScaleSizesDemo,
   "patient-header-compact-demo": PatientHeaderCompactDemo,
   "patient-header-demo": PatientHeaderDemo,
+  "patient-message-thread-demo": PatientMessageThreadDemo,
+  "patient-switcher-demo": PatientSwitcherDemo,
+  "patient-task-list-demo": PatientTaskListDemo,
+  "patient-worklist-demo": PatientWorklistDemo,
   "prescription-pad-demo": PrescriptionPadDemo,
   "problem-list-demo": ProblemListDemo,
   "problem-list-readonly-demo": ProblemListReadonlyDemo,
@@ -128,5 +141,6 @@ export const demos: Record<string, React.ComponentType> = {
   "vitals-chart-demo": VitalsChartDemo,
   "vitals-chart-single-demo": VitalsChartSingleDemo,
   "vitals-form-demo": VitalsFormDemo,
+  "workflow-state-demo": WorkflowStateDemo,
   "wound-care-tracker-demo": WoundCareTrackerDemo,
 }

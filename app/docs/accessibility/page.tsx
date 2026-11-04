@@ -11,6 +11,13 @@ const rows = [
   ["Vitals Form", "Inputs are labelled with units; errors are linked via aria-describedby and announced with role=alert."],
   ["Patient Header", "Allergy details are available on focus as well as hover; severe allergies add an icon, not just color."],
   ["Clinical Status Badge", "Every status has a text label; the critical pulse is disabled with prefers-reduced-motion."],
+  ["Patient Switcher", "Native labelled account selection; explicit patient/access context; stale profiles are hidden while loading or on error."],
+  ["Patient Task List", "Native progress indicator, textual task states, task-specific button descriptions and disabled blocked actions."],
+  ["Appointment Waitlist", "Textual request states and patient-specific action descriptions; expired offers have no built-in booking action."],
+  ["Patient Worklist", "Labelled search and status filters, semantic table headers, keyboard-accessible patient buttons and an announced result count."],
+  ["Patient Message Thread", "Labelled composer, conversation log, announced send errors, preserved failed drafts and local draft reset on conversation/viewer changes."],
+  ["Billing Summary", "Textual financial status, semantic amount descriptions and locale-aware currency formatting."],
+  ["Workflow State", "Loading/empty feedback uses role=status; errors use role=alert with optional retry. Loading animation respects reduced motion."],
 ]
 
 export default function AccessibilityPage() {
