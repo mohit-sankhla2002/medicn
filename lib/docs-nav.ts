@@ -15,6 +15,7 @@ export const gettingStarted: NavSection = {
   items: [
     { title: "Introduction", href: "/docs" },
     { title: "Installation", href: "/docs/installation" },
+    { title: "Patient & practice workflows", href: "/docs/workflows" },
     { title: "Theming", href: "/docs/theming" },
     { title: "Themes", href: "/themes" },
     { title: "Registry & directory", href: "/docs/registry" },

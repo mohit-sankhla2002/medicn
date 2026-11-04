@@ -24,12 +24,18 @@ npx shadcn@latest add @medicn/appointment-calendar @medicn/patient-intake
 
 | Category | Items |
 | --- | --- |
-| Scheduling | `appointment-calendar`, `appointment-slot-picker` |
-| Anatomy | `body-map` |
-| Forms | `pain-scale`, `vitals-form` |
-| Clinical data | `clinical-status-badge`, `vital-signs`, `medication-list` |
-| Patient | `patient-header` |
-| Blocks | `clinic-dashboard`, `patient-chart`, `appointment-booking`, `symptom-report`, `patient-intake` |
+| Foundations | `workflow-state` |
+| Scheduling | `appointment-waitlist`, `appointment-calendar`, `appointment-slot-picker` |
+| Anatomy | `body-map`, `dental-chart`, `lesion-map` |
+| Forms | `medication-form`, `pain-scale`, `vitals-form`, `bmi-calculator`, `consent-form`, `prescription-pad` |
+| Assessments | `early-warning-score`, `questionnaire`, `glasgow-coma-scale`, `fall-risk-score`, `faces-pain-scale`, `surgical-checklist`, `triage-assessment`, `wound-care-tracker` |
+| Charting | `growth-chart`, `fluid-balance`, `medication-administration-record`, `clinical-note`, `order-entry`, `discharge-summary`, `care-plan` |
+| Clinical data | `clinical-status-badge`, `vital-signs`, `medication-list`, `lab-results`, `vitals-chart`, `allergy-list`, `problem-list`, `immunization-record`, `family-history` |
+| Patient | `patient-switcher`, `patient-task-list`, `patient-message-thread`, `clinical-timeline`, `patient-header` |
+| Practice management | `patient-worklist`, `billing-summary` |
+| Blocks | `clinic-dashboard`, `patient-chart`, `appointment-booking`, `symptom-report`, `patient-intake`, `emergency-department`, `telehealth-visit` |
+
+See `/docs/workflows` for patient and practice-team examples, integration guidance, and a source-linked comparison of public healthcare product interfaces. Workflow components accept host-owned data and callbacks; authorization, persistence, booking, notifications, and payment processing stay in your application.
 
 ## Repository layout
 

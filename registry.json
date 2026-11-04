@@ -4,6 +4,168 @@
   "homepage": "https://medicn-ui.vercel.app",
   "items": [
     {
+      "name": "workflow-state",
+      "type": "registry:component",
+      "title": "Workflow State",
+      "description": "Accessible loading, empty and error feedback with a host-controlled retry action.",
+      "categories": [
+        "foundations"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/workflow-state.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-switcher",
+      "type": "registry:component",
+      "title": "Patient Switcher",
+      "description": "Patient and caregiver account selection with explicit identity, relationship and host-supplied access scope.",
+      "categories": [
+        "patient"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "label",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/patient-switcher.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-task-list",
+      "type": "registry:component",
+      "title": "Patient Task List",
+      "description": "Actionable patient checklists for pre-visit preparation, intake, follow-up and care-plan tasks.",
+      "categories": [
+        "patient"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/patient-task-list.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "appointment-waitlist",
+      "type": "registry:component",
+      "title": "Appointment Waitlist",
+      "description": "Patient or staff waitlist views with appointment preferences, slot offers, expiry details and booking actions.",
+      "categories": [
+        "scheduling"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/appointment-waitlist.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-worklist",
+      "type": "registry:component",
+      "title": "Patient Worklist",
+      "description": "Reusable practice worklist with patient search, visit-status filters, room and provider context, and custom row actions.",
+      "categories": [
+        "practice-management"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "input",
+        "label",
+        "table",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/patient-worklist.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-message-thread",
+      "type": "registry:component",
+      "title": "Patient Message Thread",
+      "description": "Patient and care-team conversations with attachments, delivery states, controlled drafts and failure-safe async sending.",
+      "categories": [
+        "patient"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "label",
+        "textarea",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/patient-message-thread.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "billing-summary",
+      "type": "registry:component",
+      "title": "Billing Summary",
+      "description": "Patient or staff statements with currency-aware amounts, authoritative adjustments, payment entry points and downloads.",
+      "categories": [
+        "practice-management"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "https://medicn-ui.vercel.app/r/workflow-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/medicn/billing-summary.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "appointment-calendar",
       "type": "registry:component",
       "title": "Appointment Calendar",

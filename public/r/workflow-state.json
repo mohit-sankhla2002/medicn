@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "workflow-state",
+  "title": "Workflow State",
+  "description": "Accessible loading, empty and error feedback with a host-controlled retry action.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "components/medicn/workflow-state.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { CircleAlert, Inbox, LoaderCircle } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Button } from \"@/components/ui/button\"\n\nexport interface WorkflowStateProps extends Omit<React.ComponentProps<\"div\">, \"title\" | \"children\"> {\n  state: \"loading\" | \"empty\" | \"error\"\n  title: React.ReactNode\n  description?: React.ReactNode\n  onRetry?: () => void\n  retryLabel?: string\n}\n\n/** Shared feedback for data-backed workflows. The host owns fetching and retries. */\nexport function WorkflowState({ state, title, description, onRetry, retryLabel = \"Try again\", className, ...props }: WorkflowStateProps) {\n  const Icon = state === \"loading\" ? LoaderCircle : state === \"error\" ? CircleAlert : Inbox\n  return (\n    <div data-slot=\"workflow-state\" role={state === \"error\" ? \"alert\" : \"status\"} className={cn(\"flex flex-col items-center gap-2 px-6 py-10 text-center\", className)} {...props}>\n      <Icon aria-hidden className={cn(\"mb-1 size-5 text-muted-foreground\", state === \"loading\" && \"animate-spin motion-reduce:animate-none\")} />\n      <p className=\"text-sm font-medium\">{title}</p>\n      {description && <div className=\"max-w-sm text-sm text-muted-foreground\">{description}</div>}\n      {state === \"error\" && onRetry && <Button type=\"button\" variant=\"outline\" size=\"sm\" className=\"mt-2\" onClick={onRetry}>{retryLabel}</Button>}\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:component"
+}
